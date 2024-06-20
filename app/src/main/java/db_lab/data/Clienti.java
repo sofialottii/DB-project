@@ -20,7 +20,7 @@ public final class Clienti {
         this.nome = nome;
         this.cognome = cognome;
         this.dataNascita = dataNascita;
-        this.email = email;
+        this.email = email == null ? "" : email;
         this.dataIscrizione = dataIscrizione;
         this.dataDisiscrizione = dataDisiscrizione;
         this.regCF = regCF;
@@ -37,11 +37,11 @@ public final class Clienti {
             return (p.CF.equals(this.CF) &&
                     p.nome.equals(this.nome) &&
                     p.cognome.equals(this.cognome) &&
-                    p.dataNascita.equals(this.dataNascita)) &&
+                    p.dataNascita.equals(this.dataNascita) &&
                     p.email.equals(this.email) &&
                     p.dataIscrizione.equals(this.dataIscrizione) &&
                     p.dataDisiscrizione.equals(this.dataDisiscrizione) &&
-                    p.regCF.equals(this.regCF);
+                    p.regCF.equals(this.regCF));
         } else {
             return false;
         }
