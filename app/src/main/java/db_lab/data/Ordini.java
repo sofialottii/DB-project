@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class Ordini {
+public final class Ordini {
 
     private final String CF;
     private final String data;

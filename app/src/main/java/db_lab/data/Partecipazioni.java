@@ -3,7 +3,7 @@ package db_lab.data;
 import java.util.List;
 import java.util.Objects;
 
-public class Partecipazioni {
+public final class Partecipazioni {
     
     private final String CF;
     private final String giornoSettimana;

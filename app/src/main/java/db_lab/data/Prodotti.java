@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class Prodotti {
+public final class Prodotti {
 
     public final String codProdotto;
     public final String tipoProdotto;

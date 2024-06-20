@@ -3,7 +3,7 @@ package db_lab.data;
 import java.util.List;
 import java.util.Objects;
 
-public class Ingredienti {
+public final class Ingredienti {
 
     private final String codIngrediente;
     private final float calorie;

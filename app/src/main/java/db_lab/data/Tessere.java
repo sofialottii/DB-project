@@ -3,7 +3,7 @@ package db_lab.data;
 import java.util.List;
 import java.util.Objects;
 
-public class Tessere {
+public final class Tessere {
 
     public final String CF;
     public final float numeroTessera;

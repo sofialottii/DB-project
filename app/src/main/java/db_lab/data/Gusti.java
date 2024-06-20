@@ -3,7 +3,7 @@ package db_lab.data;
 import java.util.List;
 import java.util.Objects;
 
-public class Gusti {
+public final class Gusti {
 
     private final String nomeGusto;
     private final String ricetta;
