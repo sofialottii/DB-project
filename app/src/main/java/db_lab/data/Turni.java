@@ -38,7 +38,7 @@ public final class Turni {
     @Override
     public String toString() {
         return Printer.stringify(
-            "Product",
+            "Turni",
             List.of(
                 Printer.field("giornoSettimana", this.giornoSettimana),
                 Printer.field("fasciaOraria", this.fasciaOraria)
@@ -47,7 +47,7 @@ public final class Turni {
     }
 
     public final class DAO {
-        
+
     }
 
 
