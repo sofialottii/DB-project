@@ -3,7 +3,7 @@ package db_lab.data;
 import java.util.List;
 import java.util.Objects;
 
-public class Composizioni {
+public final class Composizioni {
     public final String CF;
     public final String data;
     public final String orario;

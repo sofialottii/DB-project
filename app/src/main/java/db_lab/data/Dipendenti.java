@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class Dipendenti {
+public final class Dipendenti {
     public final String CF;
     public final String nome;
     public final String cognome;
