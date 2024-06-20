@@ -13,14 +13,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 public final class View {
 
@@ -35,10 +28,10 @@ public final class View {
     }
 
     private JFrame setupMainFrame(Runnable onClose) {
-        var frame = new JFrame("Tessiland");
+        var frame = new JFrame("Gelateria");
         var padding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
         ((JComponent) frame.getContentPane()).setBorder(padding);
-        frame.setMinimumSize(new Dimension(300, 100));
+        frame.setMinimumSize(new Dimension(800, 400));
         frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.PAGE_AXIS));
         frame.pack();
         frame.setResizable(false);
@@ -74,15 +67,7 @@ public final class View {
         Objects.requireNonNull(controller, "Set null controller in view");
         this.controller = Optional.of(controller);
     }
-
-    public void loadingProduct() {
-        freshPane(cp -> cp.add(new JLabel("Loading product...", SwingConstants.CENTER)));
-    }
-
-    public void loadingPreviews() {
-        freshPane(cp -> cp.add(new JLabel("Loading previews...", SwingConstants.CENTER)));
-    }
-
+/*Tutto ciò che è sopra va bene */
     public void productPage(Product product) {
         freshPane(cp -> {
             cp.add(new JLabel(product.name));
@@ -114,13 +99,18 @@ public final class View {
         });
     }
 
-    public void previewPage(List<ProductPreview> productPreviews) {
+    public void loginPage(List<ProductPreview> productPreviews) {
         freshPane(cp -> {
-            cp.add(new JLabel("All our products", SwingConstants.CENTER));
+            cp.add(new JLabel("Dipendente", SwingConstants.CENTER));
+            final JTextField dipendenteCF = new JTextField("Codice dipendente", SwingConstants.CENTER);
+            cp.add(dipendenteCF);
             cp.add(new JLabel(" "));
+            cp.add(new JLabel("Password", SwingConstants.CENTER));
+            final JTextField password = new JTextField("Password dipendente", SwingConstants.CENTER);
+            cp.add(password);
             this.addPreviews(cp, productPreviews);
             cp.add(new JLabel(" "));
-            cp.add(button("Reload", () -> this.getController().userClickedReloadPreviews()));
+            cp.add(button("Login", () -> this.getController().userClickedLogin(dipendenteCF.getText(), password.getText())));
         });
     }
 
@@ -139,7 +129,7 @@ public final class View {
     public void failedToLoadPreviews() {
         freshPane(cp -> {
             cp.add(new JLabel("I couldn't load the previews", SwingConstants.CENTER));
-            cp.add(button("Retry", () -> this.getController().userClickedReloadPreviews()));
+            //cp.add(button("Retry", () -> this.getController().userClickedReloadPreviews()));
         });
     }
 

@@ -43,13 +43,16 @@ public final class Controller {
         this.loadInitialPage();
     }
 
-    public void userClickedReloadPreviews() {
+    public void userClickedLogin(String dipendenteCF, String password) {
         this.loadInitialPage();
+        /*Verrà chiamato un metodo del model dove una query controllerà dipendente e password
+         * In base al risultato di questo metodo la view farà vedere o l'area riservata del dipendete
+         * o ci dirà che dipendente e password non sono validi
+         */
     }
 
     public void userClickedPreview(ProductPreview productPreview) {
         try {
-            this.view.loadingProduct();
             var product = this.model.find(productPreview.code);
             if (product.isPresent()) {
                 this.view.productPage(product.get());
@@ -63,7 +66,7 @@ public final class Controller {
 
     public void userClickedBack() {
         if (this.model.loadedPreviews()) {
-            this.view.previewPage(this.model.previews());
+            //this.view.previewPage(this.model.previews());
         } else {
             this.loadInitialPage();
         }
@@ -71,9 +74,8 @@ public final class Controller {
 
     void loadInitialPage() {
         try {
-            this.view.loadingPreviews();
-            var previews = this.model.loadPreviews();
-            this.view.previewPage(previews);
+            //this.view.previewPage(previews);
+
         } catch (DAOException e) {
             e.printStackTrace();
             this.view.failedToLoadPreviews();
