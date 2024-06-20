@@ -55,10 +55,10 @@ public final class ProductPreview {
 
         public static final List<ProductPreview> list(Connection connection) {
             try (
-                var statement = connection.prepareStatement(Queries.LIST_PRODUCTS);
-                var resultSet = statement.executeQuery();
-                //uso un try-catch
-                //altrimenti lo statement dovrebbe essere chiuso tramite: result.close(), statement.close()
+                var statement = connection.prepareStatement(Queries.LIST_PRODUCTS); //uso prepareStatement e non il metodo di Utility prepare
+                var resultSet = statement.executeQuery();                           //perchè non ho dei parametri nella query
+                //uso un try-catch with resources
+                //altrimenti lo statement dovrebbe essere chiuso tramite: resultSet.close(), statement.close()
                 //anche nel finally in caso di exception
             ) {
                 var previews = new ArrayList<ProductPreview>();
