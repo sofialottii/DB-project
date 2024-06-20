@@ -15,6 +15,7 @@ public final class App {
         //var model = Model.mock(); //--> se uso questo commento le due righe sotto e il try
         var connection = DAOUtils.localMySQLConnection("tessiland", "root", "");
         var model = Model.fromConnection(connection);
+        //var model = Model.mock();
         var view = new View(() -> {
             // We want to make sure we close the connection when we're done
             // with our application.
