@@ -37,10 +37,10 @@ public class Prodotti {
             return (p.codProdotto.equals(this.codProdotto) &&
                     p.tipoProdotto.equals(this.tipoProdotto) &&
                     p.tipoGelato.equals(this.tipoGelato) &&
-                    p.numeroGusti == this.numeroGusti &&
-                    p.prezzoGelato == this.prezzoGelato &&
-                    p.pesoVaschetta == this.prezzoVaschetta &&
-                    p.prezzoVaschetta == this.prezzoVaschetta);
+                    p.numeroGusti.equals(this.numeroGusti) &&
+                    p.prezzoGelato.equals(this.prezzoGelato) &&
+                    p.pesoVaschetta.equals(this.prezzoVaschetta) &&
+                    p.prezzoVaschetta.equals(this.prezzoVaschetta));
         } else {
             return false;
         }
