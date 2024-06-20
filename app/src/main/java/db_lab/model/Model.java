@@ -15,12 +15,6 @@ public interface Model {
 
     public List<ProductPreview> loadPreviews();
 
-    // Create a mocked version of the model.
-    //
-    public static Model mock() {
-        return new MockedModel();
-    }
-
     // Create a model that connects to a database using the given connection.
     //
     public static Model fromConnection(Connection connection) {
