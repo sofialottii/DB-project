@@ -15,6 +15,8 @@ public interface Model {
 
     public List<ProductPreview> loadPreviews();
 
+    public String findDipendente(String dipendenteCF, String password);
+
     // Create a model that connects to a database using the given connection.
     //
     public static Model fromConnection(Connection connection) {

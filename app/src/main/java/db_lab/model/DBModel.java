@@ -1,5 +1,6 @@
 package db_lab.model;
 
+import db_lab.data.Dipendenti;
 import db_lab.data.Product;
 import db_lab.data.ProductPreview;
 import java.sql.Connection;
@@ -46,5 +47,10 @@ public final class DBModel implements Model {
         var previews = ProductPreview.DAO.list(this.connection);
         this.previews = Optional.of(previews);
         return previews;
+    }
+
+    @Override
+    public String findDipendente(String dipendenteCF, String password) {
+        return Dipendenti.DAO.findDipendente(connection, dipendenteCF, password);
     }
 }

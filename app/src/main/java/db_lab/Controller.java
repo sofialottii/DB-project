@@ -44,7 +44,13 @@ public final class Controller {
     }
 
     public void userClickedLogin(String dipendenteCF, String password) {
-        this.loadInitialPage();
+        if(this.model.findDipendente(dipendenteCF, password)!="") {
+            //this.view.privateArea()
+        } else {
+            this.loadInitialPage();
+            //dovrà anche far vedere che dipendente e password non sono validi
+        }
+
         /*Verrà chiamato un metodo del model dove una query controllerà dipendente e password
          * In base al risultato di questo metodo la view farà vedere o l'area riservata del dipendete
          * o ci dirà che dipendente e password non sono validi
@@ -75,6 +81,7 @@ public final class Controller {
     void loadInitialPage() {
         try {
             //this.view.previewPage(previews);
+            this.view.loginPage();
 
         } catch (DAOException e) {
             e.printStackTrace();

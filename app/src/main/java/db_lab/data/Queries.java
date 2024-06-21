@@ -33,9 +33,9 @@ public final class Queries {
 
     public static final String LOGIN_DIPENDENTE =
         """
-        SELECT *
-        FROM DIPENDENTI
-        WHERE CF = ?
-        AND password = ?
+        SELECT d.CF
+        FROM DIPENDENTI d
+        WHERE d.CF = ?
+        AND d.password = ?
         """;
 }

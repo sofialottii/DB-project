@@ -99,7 +99,8 @@ public final class View {
         });
     }
 
-    public void loginPage(List<ProductPreview> productPreviews) {
+    //Buono
+    public void loginPage() {
         freshPane(cp -> {
             cp.add(new JLabel("Dipendente", SwingConstants.CENTER));
             final JTextField dipendenteCF = new JTextField("Codice dipendente", SwingConstants.CENTER);
@@ -108,7 +109,6 @@ public final class View {
             cp.add(new JLabel("Password", SwingConstants.CENTER));
             final JTextField password = new JTextField("Password dipendente", SwingConstants.CENTER);
             cp.add(password);
-            this.addPreviews(cp, productPreviews);
             cp.add(new JLabel(" "));
             cp.add(button("Login", () -> this.getController().userClickedLogin(dipendenteCF.getText(), password.getText())));
         });

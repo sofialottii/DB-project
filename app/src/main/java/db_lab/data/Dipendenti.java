@@ -3,6 +3,7 @@ package db_lab.data;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.sql.Connection;
 
 public final class Dipendenti {
     public final String CF;
@@ -74,5 +75,20 @@ public final class Dipendenti {
 
     public final class DAO {
 
+        public static String findDipendente(Connection connection, String dipendenteCF, String password) {
+            try (
+                    var statement = DAOUtils.prepare(connection, Queries.LOGIN_DIPENDENTE, dipendenteCF, password);
+                    var resultSet = statement.executeQuery();) {
+                if (resultSet.next()) {
+                    var CF = resultSet.getString("p.CF");
+                    return CF;
+                } else {
+                    return "";
+                }
+            } catch (Exception e) {
+                throw new DAOException(e);
+            }
+        }
     }
+
 }
