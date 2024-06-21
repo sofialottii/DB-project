@@ -1,6 +1,9 @@
 package db_lab.data;
 
+import java.sql.Connection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public final class Composizioni {
@@ -54,6 +57,23 @@ public final class Composizioni {
     }
 
     public final class DAO {
-        // Metodi DAO per l'interazione con il database possono essere definiti qui
+        public static final Map<String,Float> listProdottiPopolari(Connection connection) {
+            try (
+                var statement = connection.prepareStatement(Queries.GUSTO_POPOLARE); //uso prepareStatement e non il metodo di Utility prepare
+                var resultSet = statement.executeQuery();                           //perchè non ho dei parametri nella query
+                
+            ) {
+                var gustiPopolari = new HashMap<String,Float>();
+                while (resultSet.next()) {
+                    var nomeGusto = resultSet.getString("nomeGusto");
+                    var totaleQuantita = resultSet.getFloat("totaleQuantita");
+                    gustiPopolari.put(nomeGusto,totaleQuantita);
+                }
+                return gustiPopolari;
+            } catch(Exception e) {
+                throw new DAOException(e);
+            }
+        
+        }
     }
 }

@@ -54,7 +54,7 @@ public final class Controller {
     }
 
     public void showGustoPopolare() {
-        var result = this.model.listProdottiPopolari();
+        var result = this.model.listGustiPopolari();
         this.view.gustoPopolarePage(result);
     }
 
