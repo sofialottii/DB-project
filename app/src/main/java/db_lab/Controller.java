@@ -44,17 +44,34 @@ public final class Controller {
     }
 
     public void userClickedLogin(String dipendenteCF, String password) {
-        if(this.model.findDipendente(dipendenteCF, password)!="") {
-            //this.view.privateArea()
+        String dipendente = this.model.findDipendente(dipendenteCF, password);
+        if(dipendente != "") {
+            this.view.privateArea(dipendente);
         } else {
             this.loadInitialPage();
             //dovrà anche far vedere che dipendente e password non sono validi
         }
+    }
 
-        /*Verrà chiamato un metodo del model dove una query controllerà dipendente e password
-         * In base al risultato di questo metodo la view farà vedere o l'area riservata del dipendete
-         * o ci dirà che dipendente e password non sono validi
+    public void createOrdini(String dipendente){
+        /*deve visualizzare una pagina per poter creare l'ordine, in quella pagina poi verrà 
+         * presa la query dal model
          */
+    }
+
+    public void showTurni(String dipendente) {
+        /*
+         * deve visualizzare una pagina per poter visualizzare i turni del dipendente, in quella pagina poi
+         * verrà presa la query dal model
+         */
+    }
+
+    public void createDoseGusto(String dipendente){
+
+    }
+
+    public void createCliente(String dipendente){
+        
     }
 
     public void userClickedPreview(ProductPreview productPreview) {

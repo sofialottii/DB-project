@@ -114,6 +114,20 @@ public final class View {
         });
     }
 
+    public void privateArea(String dipendente) {
+        
+        System.out.println("ciao");
+        freshPane(cp -> {
+            cp.add(new JLabel("Benvenuto "+dipendente, SwingConstants.CENTER));
+            cp.add(button("Crea Ordini", () -> this.getController().createOrdini(dipendente)));
+            cp.add(button("Visualizza i miei turni", () -> this.getController().showTurni(dipendente)));
+            cp.add(button("Crea nuova dose gusto", () -> this.getController().createDoseGusto(dipendente)));
+            cp.add(button("Iscrivi cliente", () -> this.getController().createCliente(dipendente)));
+            cp.add(button("Logout", () -> this.getController().userRequestedInitialPage()));
+
+        });
+    }
+
     private void addPreviews(Container cp, List<ProductPreview> productPreviews) {
         productPreviews.forEach(preview -> {
             var tags = preview.tags

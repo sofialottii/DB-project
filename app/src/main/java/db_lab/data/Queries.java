@@ -37,5 +37,6 @@ public final class Queries {
         FROM DIPENDENTI d
         WHERE d.CF = ?
         AND d.password = ?
+        AND d.dataLicenziamento IS NULL
         """;
 }

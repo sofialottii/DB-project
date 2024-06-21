@@ -80,7 +80,7 @@ public final class Dipendenti {
                     var statement = DAOUtils.prepare(connection, Queries.LOGIN_DIPENDENTE, dipendenteCF, password);
                     var resultSet = statement.executeQuery();) {
                 if (resultSet.next()) {
-                    var CF = resultSet.getString("p.CF");
+                    var CF = resultSet.getString("d.CF");
                     return CF;
                 } else {
                     return "";
