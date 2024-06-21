@@ -80,6 +80,15 @@ public final class Controller {
         this.model.registraCliente(dipendenteCF, clienteCF, nomeCliente, cognomeCliente, dataNascita, email);
     }
 
+    public boolean deleteCliente(String clienteCF){
+        /*controllo che ci sia il CF e non sia già stato Rimosso */
+        boolean esiste = this.model.verificaSePuoiCancellareCliente(clienteCF);
+        if (esiste){
+            this.model.cancellaCliente(clienteCF);
+        } 
+        return esiste;
+    }
+
     //FUNZIONALITA AGGREGATE
 
     public void showGustoPopolare() {
@@ -105,7 +114,8 @@ public final class Controller {
     }
 
     public void showFasciaOraria(){
-
+        var fasceOrarie = this.model.listFasceOrarie();
+        this.view.fasceOrariePopolariPage(fasceOrarie);
     }
 
 

@@ -62,22 +62,6 @@ public final class Queries {
                         );
                         """;
 
-        /*
-         * public static final String PRODOTTO_POPOLARE = """
-         * SELECT codProdotto, SUM(quantita) AS totaleQuantita
-         * FROM composizioni
-         * GROUP BY codProdotto
-         * HAVING SUM(quantita) = (
-         * SELECT MAX(totaleQuantita)
-         * FROM (
-         * SELECT SUM(quantita) AS totaleQuantita
-         * FROM composizioni
-         * GROUP BY codProdotto
-         * ) AS Sottoquery
-         * );
-         * """;
-         */
-
         public static final String PRODOTTO_POPOLARE = """
                         SELECT p.codProdotto, p.tipoProdotto, p.tipoGelato, p.numeroGusti, p.pesoVaschetta, SUM(c.quantita) AS totaleQuantita
                         FROM composizioni c
@@ -113,6 +97,22 @@ public final class Queries {
                         WHERE MONTH(data) = MONTH(CURDATE()) AND YEAR(data) = YEAR(CURDATE())
                         GROUP BY mese;
                         """;
+
+        public static final String FASCIA_AFFOLLATA =
+        """
+        SELECT fasciaOraria, COUNT(*) AS numeroPartecipazioni
+        FROM partecipazioni
+        GROUP BY fasciaOraria
+        HAVING COUNT(*) = (
+            SELECT MAX(numeroPartecipazioni)
+            FROM (
+                SELECT COUNT(*) AS numeroPartecipazioni
+                FROM partecipazioni
+                GROUP BY fasciaOraria
+            ) AS sottoquery
+        );
+        
+        """;
 
         public static final String CALORIE_TOTALI = """
                         SELECT g.nomeGusto, SUM(i.calorie) AS calorieTotali
@@ -150,4 +150,19 @@ public final class Queries {
         VALUES (?, 1, 0);
         """;
         //automatico avviene subito dopo CREA_CLIENTE
+
+        public static final String VISUALIZZA_DETERMINATO_CLIENTE =
+        """
+        SELECT COUNT(*)
+        FROM CLIENTI
+        WHERE CF = ? AND dataDisiscrizione IS NULL;
+        """;
+        //se il count>=1 allora il cliente c'è ed è attualmente attivo (non disiscritto)
+
+        public static final String DISISCRIVI_CLIENTE =
+        """
+        UPDATE CLIENTI
+        SET dataDisiscrizione = CURDATE()
+        WHERE CF = ?;
+        """;
 }

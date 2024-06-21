@@ -28,6 +28,8 @@ public interface Model {
 
     public Map<String,Integer> listMesiPopolari();
 
+    public Map<String, Integer> listFasceOrarie();
+
     public String calculateRicavoMensile();
 
     public List<Turni> listTurniDipendente(String dipendente);
@@ -38,6 +40,10 @@ public interface Model {
 
     public void registraCliente(String dipendenteCF, String clienteCF, String nomeCliente, String cognomeCliente, String dataNascita,
     String email);
+
+    public boolean verificaSePuoiCancellareCliente(String clienteCF);
+
+    public void cancellaCliente(String clienteCF);
 
     // Create a model that connects to a database using the given connection.
     //

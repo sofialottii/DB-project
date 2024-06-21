@@ -104,4 +104,19 @@ public final class DBModel implements Model {
             String dataNascita, String email) {
         Clienti.DAO.registraCliente(connection, dipendenteCF, clienteCF, nomeCliente, cognomeCliente, dataNascita, email);
     }
+
+    @Override
+    public Map<String, Integer> listFasceOrarie() {
+        return Partecipazioni.DAO.listFasceOrarie(connection);
+    }
+
+    @Override
+    public boolean verificaSePuoiCancellareCliente(String clienteCF) {
+        return Clienti.DAO.verificaSePuoiCancellareCliente(connection, clienteCF);
+    }
+
+    @Override
+    public void cancellaCliente(String clienteCF) {
+        Clienti.DAO.cancellaCliente(connection, clienteCF);
+    }
 }

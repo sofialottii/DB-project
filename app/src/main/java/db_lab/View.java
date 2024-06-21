@@ -6,10 +6,15 @@ import db_lab.data.Product;
 import db_lab.data.ProductPreview;
 import db_lab.data.Turni;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.FocusAdapter;
@@ -22,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.TimerTask;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import javax.swing.*;
@@ -114,26 +120,6 @@ public final class View {
 
     //Buono
     public void loginPage() {
-        /*quello di prima: */
-        /*freshPane(cp -> {
-            cp.add(new JLabel("Dipendente", SwingConstants.CENTER));
-            final JTextField dipendenteCF = new JTextField("Codice dipendente", SwingConstants.CENTER);
-            cp.add(dipendenteCF);
-            cp.add(new JLabel(" "));
-            cp.add(new JLabel("Password", SwingConstants.CENTER));
-            final JTextField password = new JTextField("Password dipendente", SwingConstants.CENTER);
-            cp.add(password);
-            cp.add(new JLabel(" "));
-            cp.add(button("Login", () -> this.getController().userClickedLogin(dipendenteCF.getText(), password.getText())));
-
-            cp.add(new JLabel("FUNZIONI AGGREGATE", SwingConstants.CENTER));
-            cp.add(button("Gusto piu popolare", () -> this.getController().showGustoPopolare()));
-            cp.add(button("Prodotto piu popolare", () -> this.getController().showProdottoPopolare()));
-            cp.add(button("Mese con piu alto n di ordini", () -> this.getController().showBestMese()));
-            cp.add(button("Ricavo mese attuale", () -> this.getController().showRicavoMensile()));
-            cp.add(button("Fascia oraria piu affolata", () -> this.getController().showFasciaOraria()));
-            //cp.add(button("Visualizza calorie totali di un gusto", () -> this.getController().ShowGustoCalorie(?)));
-        });*/
 
         freshPane(cp -> {
             cp.setLayout(new GridLayout(0, 1, 10, 10)); // GridLayout con spaziatura tra i componenti
@@ -216,8 +202,6 @@ public final class View {
             cp.add(button("Mese con piu alto numero di ordini", () -> this.getController().showBestMese()));
             cp.add(button("Ricavo mese attuale", () -> this.getController().showRicavoMensile()));
             cp.add(button("Fascia oraria piu affollata", () -> this.getController().showFasciaOraria()));
-            // Esempio di commento per pulsante non attivo
-            // cp.add(button("Visualizza calorie totali di un gusto", () -> this.getController().ShowGustoCalorie(?)));
 
             // Aggiunta di margine per migliorare l'aspetto
             ((JComponent) cp).setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -228,48 +212,73 @@ public final class View {
     //Buono
     public void privateArea(String dipendente) {
         
-        System.out.println("ciao");
         freshPane(cp -> {
+            cp.setLayout(new GridLayout(0, 1, 10, 10)); // GridLayout con una sola colonna e spaziatura di 10 pixel
+
             cp.add(new JLabel("Benvenuto "+dipendente, SwingConstants.CENTER));
             cp.add(button("Crea Ordini", () -> this.getController().createOrdini(dipendente)));
             cp.add(button("Visualizza i miei turni", () -> this.getController().showTurni(dipendente)));
             cp.add(button("Crea nuova dose gusto", () -> this.getController().createDoseGusto(dipendente)));
             cp.add(button("Iscrivi cliente", () -> this.createClientePage(dipendente)));
+            cp.add(button("Disiscrivi cliente", () -> this.deleteClientePage(dipendente)));
             cp.add(button("Logout", () -> this.getController().userRequestedInitialPage()));
         });
     }
 
+    /*visualizzazione turni */
+
     public void turniDipendentePage(List<Turni> turni, String dipendente) {
         freshPane(cp -> {
+            this.esteticaAggregate(cp, "Turni dipendente "+dipendente);
             this.addTurni(cp, turni);
-            cp.add(button("Go Back", () -> this.privateArea(dipendente)));
+            
+            JButton goBackButton = button("Go Back", () -> this.privateArea(dipendente));
+            cp.add(goBackButton);
+
+            ((JComponent) cp).setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+
+            /*this.addTurni(cp, turni);
+            cp.add(button("Go Back", () -> this.privateArea(dipendente)));*/
         });
     }
 
     private void addTurni(Container cp, List<Turni> turni) {
-        Collections.sort(turni, Comparator.comparing(t -> t.giornoSettimana));
         turni.forEach(turno -> {
             var label = "- " + turno.giornoSettimana + " [" + turno.fasciaOraria + "]";
-            cp.add(new JLabel(label), SwingConstants.CENTER);
+            JLabel turnoLabel = new JLabel(label, SwingConstants.CENTER);
+            cp.add(turnoLabel, SwingConstants.CENTER);
+
+            //turnoLabel.setFont(new Font("Arial", Font.BOLD, 14));
+            turnoLabel.setForeground(Color.BLACK); // Colore del testo
+            cp.add(turnoLabel);
+            
+            //cp.add(new JLabel(label), SwingConstants.CENTER);
         });
     }
 
-    //NUOVA DOSE GUSTO
+    /* creazione nuova dose gusto */
     
     public void scegliGustoPerDose(String dipendente, List<String> allGusti){
-        freshPane( cp -> { 
+        freshPane( cp -> {
+            cp.setLayout(new GridLayout(0, 2, 10, 10)); // GridLayout con due colonne e spaziatura
+
             allGusti.forEach(gusto -> {
                 var label = " [ " + gusto + " ] ";
                 cp.add(clickableLabel(label, () -> this.creaDoseGusto(dipendente, gusto)));
-                // cp.add(clickableLabel(label, () ->
-                // this.getController().userClickedPreview(gusto)));
             });
+            JButton goBackButton = button("Go Back", () -> this.privateArea(dipendente));
+            cp.add(goBackButton);
+
+            cp.add(Box.createGlue());
+
+            ((JComponent) cp).setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Margini esterni
         });
     }
 
     public void creaDoseGusto(String dipendente, String gusto){
         freshPane( cp -> {
-            cp.add(new JLabel("Selezionare quantità (in kg)", SwingConstants.CENTER));
+            cp.add(new JLabel("Selezionare quantita (in kg)", SwingConstants.CENTER));
             final JTextField quantita = new JTextField("", SwingConstants.CENTER);
             cp.add(quantita);
 
@@ -278,11 +287,14 @@ public final class View {
                 this.privateArea(dipendente);
             }));
 
+            JButton goBackButton = button("Go Back", () -> this.privateArea(dipendente));
+            cp.add(goBackButton);
+
         });
         
     }
 
-    //CREAZIONE NUOVO CLIENTE
+    /* creazione di un nuovo cliente */
 
     public void createClientePage(String dipendente){
         freshPane(cp -> {
@@ -305,8 +317,6 @@ public final class View {
             cp.add(new JLabel("E-mail (opzionale)", SwingConstants.CENTER));
             final JTextField email = new JTextField("", SwingConstants.CENTER);
             cp.add(email);
-
-            //String mailFinale = email.getText() == "" ? null : email.getText();
             
             cp.add(button("Crea",
                     () -> {
@@ -315,8 +325,47 @@ public final class View {
                         
                         this.privateArea(dipendente);
                     }));
+            JButton goBackButton = button("Go Back", () -> this.privateArea(dipendente));
+            cp.add(goBackButton);
 
         });
+    }
+
+    /* disiscrizione di un cliente a data corrente */
+
+    public void deleteClientePage(String dipendente){
+        freshPane(cp -> {
+            JLabel cfLabel = new JLabel("codice fiscale cliente da disiscrivere", SwingConstants.CENTER);
+            cp.add(cfLabel);
+
+            final JTextField clienteCF = new JTextField("", SwingConstants.CENTER);
+            cp.add(clienteCF);
+
+            cp.add(button("Crea",
+                    () -> {
+                        boolean x = this.getController().deleteCliente(clienteCF.getText());
+                        if (x){
+                            this.privateArea(dipendente);
+                        } else {
+                            showErrorLabel(cp, cfLabel);
+                        }
+                        
+                    }));
+            JButton goBackButton = button("Go Back", () -> this.privateArea(dipendente));
+            cp.add(goBackButton);
+        });
+    }
+
+    private void showErrorLabel(Container cp, JLabel label) {
+        label.setText("CF Cliente errato");
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                label.setText("Codice fiscale cliente da disiscrivere");
+                timer.cancel();
+            }
+        }, 3000); // 3000 millisecondi = 3 secondi
     }
 
 
@@ -349,6 +398,13 @@ public final class View {
             JLabel label = new JLabel(ricavo, SwingConstants.CENTER);
             label.setFont(new Font("Arial", Font.BOLD, 20));
             cp.add(label);
+            cp.add(button("Go back", () -> this.getController().userRequestedInitialPage()));
+        });
+    }
+
+    public void fasceOrariePopolariPage(Map<String, Integer> fasceOrarie){
+        freshPane(cp -> {
+            this.addFascePopolari(cp, fasceOrarie);
             cp.add(button("Go back", () -> this.getController().userRequestedInitialPage()));
         });
     }
@@ -387,9 +443,23 @@ public final class View {
                 .sorted()
                 .forEach(name -> {
                     Integer value = prodottiPopolari.get(name);
-                    var label = name + " [" + value + "]";
+                    var label = name + " [" + value + " vendite]";
                     JLabel prodottiLabel = new JLabel(label, SwingConstants.CENTER);
                     cp.add(prodottiLabel);
+                });
+        ((JComponent) cp).setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Margini esterni
+    }
+
+    private void addFascePopolari(Container cp, Map<String, Integer> fasceOrarie){
+        this.esteticaAggregate(cp, "Fasce orarie popolari");
+
+        fasceOrarie.keySet().stream()
+                .sorted()
+                .forEach(name -> {
+                    Integer value = fasceOrarie.get(name);
+                    var label = name + " [" + value + " ordini]";
+                    JLabel fasceLabel = new JLabel(label, SwingConstants.CENTER);
+                    cp.add(fasceLabel);
                 });
         ((JComponent) cp).setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Margini esterni
     }
