@@ -86,6 +86,8 @@ public final class DosiGusto {
                     var statement = DAOUtils.prepare(connection, Queries.CREA_DOSE, dipendenteCF, quantita, gusto);
                     ) {
                     statement.executeUpdate();
+
+                    statement.close();
                 
             } catch (Exception e) {
                 throw new DAOException(e);

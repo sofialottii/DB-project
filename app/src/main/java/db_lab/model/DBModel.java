@@ -1,5 +1,6 @@
 package db_lab.model;
 
+import db_lab.data.Clienti;
 import db_lab.data.Composizioni;
 import db_lab.data.Dipendenti;
 import db_lab.data.DosiGusto;
@@ -96,5 +97,11 @@ public final class DBModel implements Model {
     @Override
     public void registraDose(String dipendente, String gusto, Float quantita){
         DosiGusto.DAO.registraDose(connection, dipendente, gusto, quantita);
+    }
+
+    @Override
+    public void registraCliente(String dipendenteCF, String clienteCF, String nomeCliente, String cognomeCliente,
+            String dataNascita, String email) {
+        Clienti.DAO.registraCliente(connection, dipendenteCF, clienteCF, nomeCliente, cognomeCliente, dataNascita, email);
     }
 }

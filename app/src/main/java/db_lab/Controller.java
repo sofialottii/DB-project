@@ -75,8 +75,9 @@ public final class Controller {
         this.model.registraDose(dipendente, gusto, quantita);
     }
 
-    public void createCliente(String dipendente){
-
+    public void createCliente(String dipendenteCF, String clienteCF, String nomeCliente, String cognomeCliente, String dataNascita,
+        String email){
+        this.model.registraCliente(dipendenteCF, clienteCF, nomeCliente, cognomeCliente, dataNascita, email);
     }
 
     //FUNZIONALITA AGGREGATE

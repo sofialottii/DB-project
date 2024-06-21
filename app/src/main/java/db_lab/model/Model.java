@@ -36,6 +36,9 @@ public interface Model {
 
     public void registraDose(String dipendente, String gusto, Float quantita);
 
+    public void registraCliente(String dipendenteCF, String clienteCF, String nomeCliente, String cognomeCliente, String dataNascita,
+    String email);
+
     // Create a model that connects to a database using the given connection.
     //
     public static Model fromConnection(Connection connection) {

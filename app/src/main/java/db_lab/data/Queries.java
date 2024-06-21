@@ -136,4 +136,18 @@ public final class Queries {
         VALUES (?, CURDATE(), CURTIME(), ?, ?);
 
         """;
+
+        public static final String CREA_CLIENTE =
+        """
+        INSERT INTO CLIENTI (CF, nome, cognome, dataNascita, e_mail, dataIscrizione, dataDisiscrizione, Reg_CF)
+        VALUES (?, ?, ?, ?, ?, CURDATE(), null, ?);
+        
+        """;
+
+        public static final String CREA_PRIMA_TESSERA =
+        """
+        INSERT INTO TESSERE (CF, numeroTessera, numeroAcquisti)
+        VALUES (?, 1, 0);
+        """;
+        //automatico avviene subito dopo CREA_CLIENTE
 }

@@ -138,7 +138,7 @@ public final class View {
             cp.add(button("Crea Ordini", () -> this.getController().createOrdini(dipendente)));
             cp.add(button("Visualizza i miei turni", () -> this.getController().showTurni(dipendente)));
             cp.add(button("Crea nuova dose gusto", () -> this.getController().createDoseGusto(dipendente)));
-            cp.add(button("Iscrivi cliente", () -> this.getController().createCliente(dipendente)));
+            cp.add(button("Iscrivi cliente", () -> this.createClientePage(dipendente)));
             cp.add(button("Logout", () -> this.getController().userRequestedInitialPage()));
         });
     }
@@ -186,6 +186,43 @@ public final class View {
             //cp.add(button("Go Back", () -> this.privateArea(dipendente)));
         });
         
+    }
+
+    //CREAZIONE NUOVO CLIENTE
+
+    public void createClientePage(String dipendente){
+        freshPane(cp -> {
+            cp.add(new JLabel("codice fiscale cliente", SwingConstants.CENTER));
+            final JTextField clienteCF = new JTextField("", SwingConstants.CENTER);
+            cp.add(clienteCF);
+            cp.add(new JLabel(" "));
+            cp.add(new JLabel("nome cliente", SwingConstants.CENTER));
+            final JTextField nomeCliente = new JTextField("", SwingConstants.CENTER);
+            cp.add(nomeCliente);
+            cp.add(new JLabel(" "));
+            cp.add(new JLabel("cognome cliente", SwingConstants.CENTER));
+            final JTextField cognomeCliente = new JTextField("", SwingConstants.CENTER);
+            cp.add(cognomeCliente);
+            cp.add(new JLabel(" "));
+            cp.add(new JLabel("Data di nascita (formato aaaa-mm-gg)", SwingConstants.CENTER));
+            final JTextField dataNascita = new JTextField("", SwingConstants.CENTER);
+            cp.add(dataNascita);
+            cp.add(new JLabel(" "));
+            cp.add(new JLabel("E-mail (opzionale)", SwingConstants.CENTER));
+            final JTextField email = new JTextField("", SwingConstants.CENTER);
+            cp.add(email);
+
+            //String mailFinale = email.getText() == "" ? null : email.getText();
+            
+            cp.add(button("Crea",
+                    () -> {
+                        this.getController().createCliente(dipendente, clienteCF.getText(), nomeCliente.getText(),
+                        cognomeCliente.getText(), dataNascita.getText(), email.getText());
+                        
+                        this.privateArea(dipendente);
+                    }));
+
+        });
     }
 
 

@@ -1,5 +1,7 @@
 package db_lab.data;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Objects;
 
@@ -69,7 +71,29 @@ public final class Clienti {
     }
 
     public final class DAO {
+        public static void registraCliente(Connection connection, String dipendenteCF, String clienteCF, String nomeCliente,
+        String cognomeCliente, String dataNascita, String email) {
+            System.out.println(email);
+            try (
+                    
+                    var statement = email.isEmpty() ?
+                        DAOUtils.prepare(connection, Queries.CREA_CLIENTE, clienteCF, nomeCliente, cognomeCliente,
+                        dataNascita, null, dipendenteCF) :
+                        DAOUtils.prepare(connection, Queries.CREA_CLIENTE, clienteCF, nomeCliente, cognomeCliente,
+                        dataNascita, email, dipendenteCF);
+                    
+                    var statement2 = DAOUtils.prepare(connection, Queries.CREA_PRIMA_TESSERA, clienteCF);
+                    ) {
+                    statement.executeUpdate();
+                    statement2.executeUpdate();
 
+                    statement.close();
+                    statement2.close();
+                
+            } catch (Exception e) {
+                throw new DAOException(e);
+            }
+        }
     }
 
 }
