@@ -39,4 +39,37 @@ public final class Queries {
         AND d.password = ?
         AND d.dataLicenziamento IS NULL
         """;
+
+    public static final String SHOW_TURNI = 
+        """
+
+        """;
+
+    
+
+    public static final String CREATE_ORDINI =
+        """
+        INSERT INTO ORDINI (CF, data, orario, importoTotale, Con_CF, Con_numeroTessera)
+                    VALUES ( ?, CURDATE(), CURTIME(), ?, ?, ?);
+        """;
+
+    public static final String GUSTO_POPOLARE =
+        """
+        SELECT nomeGusto, SUM(quantita) AS totaleQuantita
+        FROM DOSI_GUSTO
+        GROUP BY nomeGusto
+        HAVING SUM(quantita) = (
+            SELECT MAX(totaleQuantita)
+            FROM (
+                SELECT SUM(quantita) AS totaleQuantita
+                FROM DOSI_GUSTO
+                GROUP BY nomeGusto
+            ) AS Sottoquery
+        );
+        """;
+
+    public static final String PRODOTTO_POPOLARE = 
+        """
+                
+        """;
 }

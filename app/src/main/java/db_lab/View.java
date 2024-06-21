@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -111,9 +112,18 @@ public final class View {
             cp.add(password);
             cp.add(new JLabel(" "));
             cp.add(button("Login", () -> this.getController().userClickedLogin(dipendenteCF.getText(), password.getText())));
+
+            cp.add(new JLabel("FUNZIONI AGGREGATE", SwingConstants.CENTER));
+            cp.add(button("Gusto più popolare", () -> this.getController().showGustoPopolare()));
+            cp.add(button("Prodotto più popolare", () -> this.getController().showProdottoPopolare()));
+            cp.add(button("Mese con più alto n di ordini", () -> this.getController().showBestMese()));
+            cp.add(button("Ricavo mese attuale", () -> this.getController().showRicavoMensile()));
+            cp.add(button("Fascia oraria più affolata", () -> this.getController().showFasciaOraria()));
+            //cp.add(button("Visualizza calorie totali di un gusto", () -> this.getController().ShowGustoCalorie(?)));
         });
     }
 
+    //Buono
     public void privateArea(String dipendente) {
         
         System.out.println("ciao");
@@ -128,6 +138,29 @@ public final class View {
         });
     }
 
+    //FUNZIONI AGGREGATE
+
+    public void gustoPopolarePage(Map<String, Float> result) {
+        freshPane(cp -> {
+            this.addGustiPopolari(cp, result);
+            // cp.add(new JLabel(, SwingConstants.CENTER));
+            cp.add(button("Logout", () -> this.getController().userRequestedInitialPage()));
+        });
+    }
+
+    private void addGustiPopolari(Container cp, Map<String, Float> gustiPopolari) {
+        gustiPopolari.keySet().stream()
+                .sorted()
+                .forEach(name -> {
+                    Float value = gustiPopolari.get(name);
+                    var label = "- " + name + " [" + value + " kg]";
+                    cp.add(new JLabel(label), SwingConstants.CENTER);
+                });
+    }
+
+    
+    
+    
     private void addPreviews(Container cp, List<ProductPreview> productPreviews) {
         productPreviews.forEach(preview -> {
             var tags = preview.tags
@@ -139,6 +172,7 @@ public final class View {
             cp.add(clickableLabel(label, () -> this.getController().userClickedPreview(preview)));
         });
     }
+
 
     public void failedToLoadPreviews() {
         freshPane(cp -> {

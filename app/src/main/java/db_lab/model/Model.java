@@ -4,6 +4,7 @@ import db_lab.data.Product;
 import db_lab.data.ProductPreview;
 import java.sql.Connection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface Model {
@@ -16,6 +17,8 @@ public interface Model {
     public List<ProductPreview> loadPreviews();
 
     public String findDipendente(String dipendenteCF, String password);
+
+    public Map<String,Float> listProdottiPopolari();
 
     // Create a model that connects to a database using the given connection.
     //
