@@ -1,10 +1,12 @@
 package db_lab.model;
 
 import db_lab.data.Dipendenti;
+import db_lab.data.DosiGusto;
 import db_lab.data.Product;
 import db_lab.data.ProductPreview;
 import java.sql.Connection;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -52,5 +54,10 @@ public final class DBModel implements Model {
     @Override
     public String findDipendente(String dipendenteCF, String password) {
         return Dipendenti.DAO.findDipendente(connection, dipendenteCF, password);
+    }
+
+    @Override
+    public Map<String, Float> listProdottiPopolari() {
+        return DosiGusto.DAO.listProdottiPopolari(connection);
     }
 }

@@ -53,6 +53,11 @@ public final class Controller {
         }
     }
 
+    public void showGustoPopolare() {
+        var result = this.model.listProdottiPopolari();
+        this.view.gustoPopolarePage(result);
+    }
+
     public void createOrdini(String dipendente){
         /*deve visualizzare una pagina per poter creare l'ordine, in quella pagina poi verrà 
          * presa la query dal model
@@ -71,8 +76,30 @@ public final class Controller {
     }
 
     public void createCliente(String dipendente){
-        
+
     }
+
+    //FUNZIONALITA AGGREGATE
+
+
+
+    public void showProdottoPopolare(){
+
+    }
+
+    public void showBestMese(){
+
+    }
+
+    public void showRicavoMensile(){
+
+    }
+
+    public void showFasciaOraria(){
+
+    }
+
+
 
     public void userClickedPreview(ProductPreview productPreview) {
         try {
