@@ -9,12 +9,12 @@ import java.sql.Connection;
 
 public final class Ordini {
 
-    private final String CF;
-    private final String data;
-    private final String orario;
-    private final float importoTotale;
-    private final String con_CF;
-    private final Optional<Float> con_numeroTessera; 
+    public final String CF;
+    public final String data;
+    public final String orario;
+    public final float importoTotale;
+    public final String con_CF;
+    public final Optional<Float> con_numeroTessera; 
 
     public Ordini(String CF, String data, String orario, float importoTotale, 
                   String con_CF, Optional<Float> con_numeroTessera) {

@@ -1,5 +1,6 @@
 package db_lab;
 
+import db_lab.data.Gusti;
 import db_lab.data.Prodotti;
 import db_lab.data.Product;
 import db_lab.data.ProductPreview;
@@ -157,6 +158,15 @@ public final class View {
             cp.add(new JLabel(label), SwingConstants.CENTER);
         });
     }
+
+    //NUOVA DOSE GUSTO
+    /*
+    public void creaNuovaDoseGusto(Container cp, List<Gusti> allGusti){
+        allGusti.forEach(gusto -> {
+            var label = "- " + gusto.nomeGusto + " [" + tags + "]";
+            cp.add(clickableLabel(label, () -> this.getController().userClickedPreview(preview)));
+        });
+    }*/
 
 
     //FUNZIONI AGGREGATE

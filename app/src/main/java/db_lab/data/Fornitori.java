@@ -5,9 +5,9 @@ import java.util.Objects;
 
 public final class Fornitori {
     
-    private final String codFornitore;
-    private final String nomeAzienda;
-    private final String recapito;
+    public final String codFornitore;
+    public final String nomeAzienda;
+    public final String recapito;
 
     public Fornitori(String codFornitore, String nomeAzienda, String recapito) {
         this.codFornitore = codFornitore;

@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.sql.Connection;
 
+
 public final class Partecipazioni {
     
-    private final String CF;
-    private final String giornoSettimana;
-    private final String fasciaOraria;
+    public final String CF;
+    public final String giornoSettimana;
+    public final String fasciaOraria;
 
     public Partecipazioni(String CF, String giornoSettimana, String fasciaOraria) {
         this.CF = CF;

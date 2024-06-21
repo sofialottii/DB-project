@@ -5,10 +5,10 @@ import java.util.Objects;
 
 public final class Ingredienti {
 
-    private final String codIngrediente;
-    private final float calorie;
-    private final String codFornitore;
-    private final String nomeIngrediente;
+    public final String codIngrediente;
+    public final float calorie;
+    public final String codFornitore;
+    public final String nomeIngrediente;
 
     public Ingredienti(String codIngrediente, float calorie, String codFornitore, String nomeIngrediente) {
         this.codIngrediente = codIngrediente;

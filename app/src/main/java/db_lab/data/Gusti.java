@@ -5,12 +5,12 @@ import java.util.Objects;
 
 public final class Gusti {
 
-    private final String nomeGusto;
-    private final String ricetta;
-    private final float calorieTotali;
-    private final String tipoGusto;
-    private final String disponibilita;
-    private final String periodoDisponibilita;
+    public final String nomeGusto;
+    public final String ricetta;
+    public final float calorieTotali;
+    public final String tipoGusto;
+    public final String disponibilita;
+    public final String periodoDisponibilita;
 
     public Gusti(String nomeGusto, String ricetta, float calorieTotali, String tipoGusto, 
                  String disponibilita, String periodoDisponibilita) {
