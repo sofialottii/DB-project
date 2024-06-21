@@ -70,10 +70,11 @@ public final class Queries {
 
     public static final String PRODOTTO_POPOLARE = 
         """
-        SELECT codProdotto, SUM(quantita) AS totaleQuantita
-        FROM composizioni
-        GROUP BY codProdotto
-        HAVING SUM(quantita) = (
+        SELECT p.codProdotto, p.tipoProdotto, p.numeroGusti, p.pesoVaschetta, SUM(c.quantita) AS totaleQuantita
+        FROM composizioni c
+        JOIN PRODOTTI p ON c.codProdotto = p.codProdotto
+        GROUP BY p.codProdotto, p.tipoProdotto, p.numeroGusti, p.pesoVaschetta
+        HAVING SUM(c.quantita) = (
             SELECT MAX(totaleQuantita)
             FROM (
                 SELECT SUM(quantita) AS totaleQuantita

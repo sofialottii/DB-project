@@ -57,15 +57,17 @@ public final class Composizioni {
     }
 
     public final class DAO {
-        public static final Map<String,Float> listProdottiPopolari(Connection connection) {
+        /*public static final Map<String,Float> listProdottiPopolari(Connection connection) {
             try (
-                var statement = connection.prepareStatement(Queries.GUSTO_POPOLARE); //uso prepareStatement e non il metodo di Utility prepare
+                var statement = connection.prepareStatement(Queries.PRODOTTO_POPOLARE); //uso prepareStatement e non il metodo di Utility prepare
                 var resultSet = statement.executeQuery();                           //perchè non ho dei parametri nella query
                 
             ) {
-                var gustiPopolari = new HashMap<String,Float>();
+                var prodottiPopolari = new HashMap<String,Float>();
                 while (resultSet.next()) {
-                    var nomeGusto = resultSet.getString("nomeGusto");
+                    var codProdotto = resultSet.getString("p.codProdotto");
+                    var tipoProdotto = resultSet.getString("p.tipoProdotto");
+                    var numeroGusti = resultSet.getInt("p.numeroGusti");
                     var totaleQuantita = resultSet.getFloat("totaleQuantita");
                     gustiPopolari.put(nomeGusto,totaleQuantita);
                 }
@@ -74,6 +76,6 @@ public final class Composizioni {
                 throw new DAOException(e);
             }
         
-        }
+        }*/
     }
 }
