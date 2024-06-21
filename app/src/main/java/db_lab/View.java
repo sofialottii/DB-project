@@ -157,8 +157,6 @@ public final class View {
                     cp.add(new JLabel(label), SwingConstants.CENTER);
                 });
     }
-
-    
     
     
     private void addPreviews(Container cp, List<ProductPreview> productPreviews) {
