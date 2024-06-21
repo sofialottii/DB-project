@@ -8,6 +8,12 @@ import db_lab.data.Turni;
 
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -108,7 +114,8 @@ public final class View {
 
     //Buono
     public void loginPage() {
-        freshPane(cp -> {
+        /*quello di prima: */
+        /*freshPane(cp -> {
             cp.add(new JLabel("Dipendente", SwingConstants.CENTER));
             final JTextField dipendenteCF = new JTextField("Codice dipendente", SwingConstants.CENTER);
             cp.add(dipendenteCF);
@@ -120,13 +127,102 @@ public final class View {
             cp.add(button("Login", () -> this.getController().userClickedLogin(dipendenteCF.getText(), password.getText())));
 
             cp.add(new JLabel("FUNZIONI AGGREGATE", SwingConstants.CENTER));
-            cp.add(button("Gusto più popolare", () -> this.getController().showGustoPopolare()));
-            cp.add(button("Prodotto più popolare", () -> this.getController().showProdottoPopolare()));
-            cp.add(button("Mese con più alto n di ordini", () -> this.getController().showBestMese()));
+            cp.add(button("Gusto piu popolare", () -> this.getController().showGustoPopolare()));
+            cp.add(button("Prodotto piu popolare", () -> this.getController().showProdottoPopolare()));
+            cp.add(button("Mese con piu alto n di ordini", () -> this.getController().showBestMese()));
             cp.add(button("Ricavo mese attuale", () -> this.getController().showRicavoMensile()));
-            cp.add(button("Fascia oraria più affolata", () -> this.getController().showFasciaOraria()));
+            cp.add(button("Fascia oraria piu affolata", () -> this.getController().showFasciaOraria()));
             //cp.add(button("Visualizza calorie totali di un gusto", () -> this.getController().ShowGustoCalorie(?)));
+        });*/
+
+        freshPane(cp -> {
+            cp.setLayout(new GridLayout(0, 1, 10, 10)); // GridLayout con spaziatura tra i componenti
+            cp.setBackground(Color.lightGray); // Sfondo grigio chiaro
+
+            // Titolo e campo Codice dipendente
+            JLabel labelDipendente = new JLabel("Dipendente", SwingConstants.CENTER);
+            labelDipendente.setFont(new Font("Arial", Font.BOLD, 18)); // Stile del titolo
+            labelDipendente.setForeground(Color.BLUE); // Colore del testo
+            cp.add(labelDipendente);
+            final JTextField dipendenteCF = new JTextField("Codice dipendente", SwingConstants.CENTER);
+            dipendenteCF.setForeground(Color.GRAY); // Colore del testo grigio
+            cp.add(dipendenteCF);
+
+            // FocusListener per gestire il testo predefinito
+            dipendenteCF.addFocusListener(new FocusAdapter() {
+                @Override
+                public void focusGained(FocusEvent e) {
+                    if (dipendenteCF.getText().equals("Codice dipendente")) {
+                        dipendenteCF.setText("");
+                        dipendenteCF.setForeground(Color.BLACK); // Cambia il colore del testo quando viene selezionato
+                    }
+                }
+
+                @Override
+                public void focusLost(FocusEvent e) {
+                    if (dipendenteCF.getText().isEmpty()) {
+                        dipendenteCF.setText("Codice dipendente");
+                        dipendenteCF.setForeground(Color.GRAY); // Ripristina il colore del testo grigio se vuoto
+                    }
+                }
+            });
+
+            // Spazio vuoto decorativo
+            cp.add(Box.createRigidArea(new Dimension(0, 10))); // Spazio vuoto con altezza 10
+
+            // Titolo e campo Password
+            JLabel labelPassword = new JLabel("Password", SwingConstants.CENTER);
+            labelPassword.setFont(new Font("Arial", Font.BOLD, 18)); // Stile del titolo
+            labelPassword.setForeground(Color.BLUE); // Colore del testo
+            cp.add(labelPassword);
+            final JPasswordField password = new JPasswordField("Password dipendente", SwingConstants.CENTER);
+            password.setForeground(Color.GRAY); // Colore del testo grigio
+            cp.add(password);
+
+            // FocusListener per gestire il testo predefinito
+            password.addFocusListener(new FocusAdapter() {
+                @Override
+                public void focusGained(FocusEvent e) {
+                    if (new String(password.getPassword()).equals("Password dipendente")) {
+                        password.setText("");
+                        password.setForeground(Color.BLACK); // Cambia il colore del testo quando viene selezionato
+                    }
+                }
+
+                @Override
+                public void focusLost(FocusEvent e) {
+                    if (new String(password.getPassword()).isEmpty()) {
+                        password.setText("Password dipendente");
+                        password.setForeground(Color.GRAY); // Ripristina il colore del testo grigio se vuoto
+                    }
+                }
+            });
+
+            // Pulsante di Login con colore di sfondo personalizzato
+            JButton loginButton = button("Login", () -> this.getController().userClickedLogin(dipendenteCF.getText(), new String(password.getPassword())));
+            loginButton.setBackground(Color.CYAN); // Colore di sfondo ciano
+            loginButton.setForeground(Color.BLACK); // Colore del testo nero
+            cp.add(loginButton);
+
+            // Titolo per le funzioni aggregate
+            JLabel labelFunzioni = new JLabel("FUNZIONI AGGREGATE", SwingConstants.CENTER);
+            labelFunzioni.setFont(new Font("Arial", Font.BOLD, 18)); // Stile del titolo
+            labelFunzioni.setForeground(Color.BLACK); // Colore del testo
+            cp.add(labelFunzioni);
+
+            // Pulsanti per le funzioni aggregate con colori personalizzati
+            cp.add(button("Gusto piu popolare", () -> this.getController().showGustoPopolare()));
+            cp.add(button("Prodotto piu popolare", () -> this.getController().showProdottoPopolare()));
+            cp.add(button("Mese con piu alto numero di ordini", () -> this.getController().showBestMese()));
+            cp.add(button("Ricavo mese attuale", () -> this.getController().showRicavoMensile()));
+            cp.add(button("Fascia oraria piu affollata", () -> this.getController().showFasciaOraria()));
+            // Esempio di commento per pulsante non attivo
+            // cp.add(button("Visualizza calorie totali di un gusto", () -> this.getController().ShowGustoCalorie(?)));
+
+            // Aggiunta di margine per migliorare l'aspetto
+            ((JComponent) cp).setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         });
+    
     }
 
     //Buono
@@ -146,7 +242,6 @@ public final class View {
     public void turniDipendentePage(List<Turni> turni, String dipendente) {
         freshPane(cp -> {
             this.addTurni(cp, turni);
-            // cp.add(new JLabel(, SwingConstants.CENTER));
             cp.add(button("Go Back", () -> this.privateArea(dipendente)));
         });
     }
@@ -183,7 +278,6 @@ public final class View {
                 this.privateArea(dipendente);
             }));
 
-            //cp.add(button("Go Back", () -> this.privateArea(dipendente)));
         });
         
     }
@@ -226,71 +320,90 @@ public final class View {
     }
 
 
-    //FUNZIONI AGGREGATE
+    /********FUNZIONI AGGREGATE**************************/
 
+    
     public void gustoPopolarePage(Map<String, Float> result) {
         freshPane(cp -> {
             this.addGustiPopolari(cp, result);
-            // cp.add(new JLabel(, SwingConstants.CENTER));
-            cp.add(button("Logout", () -> this.getController().userRequestedInitialPage()));
+            cp.add(button("Go back", () -> this.getController().userRequestedInitialPage()));
         });
     }
 
     public void mesiPopolariPage(Map<String, Integer> result) {
         freshPane(cp -> {
             this.addMesiPopolari(cp, result);
-            // cp.add(new JLabel(, SwingConstants.CENTER));
-            cp.add(button("Logout", () -> this.getController().userRequestedInitialPage()));
+            cp.add(button("Go back", () -> this.getController().userRequestedInitialPage()));
         });
     }
 
     public void prodottiPopolariPage(Map<String, Integer> prodottiPopolari){
         freshPane(cp -> {
             this.addProdottiPopolari(cp, prodottiPopolari);
-            // cp.add(new JLabel(, SwingConstants.CENTER));
-            cp.add(button("Logout", () -> this.getController().userRequestedInitialPage()));
+            cp.add(button("Go back", () -> this.getController().userRequestedInitialPage()));
         });
     }
 
     public void ricavoMensilePage(String ricavo){
         freshPane(cp -> {
-            cp.add(new JLabel(ricavo));
-            // cp.add(new JLabel(, SwingConstants.CENTER));
-            cp.add(button("Logout", () -> this.getController().userRequestedInitialPage()));
+            JLabel label = new JLabel(ricavo, SwingConstants.CENTER);
+            label.setFont(new Font("Arial", Font.BOLD, 20));
+            cp.add(label);
+            cp.add(button("Go back", () -> this.getController().userRequestedInitialPage()));
         });
     }
 
     private void addGustiPopolari(Container cp, Map<String, Float> gustiPopolari) {
+        this.esteticaAggregate(cp, "Gusti popolari");
+
         gustiPopolari.keySet().stream()
                 .sorted()
                 .forEach(name -> {
                     Float value = gustiPopolari.get(name);
-                    var label = "- " + name + " [" + value + " kg]";
-                    cp.add(new JLabel(label), SwingConstants.CENTER);
+                    var label = name + " [" + value + " kg]";
+                    JLabel gustiLabel = new JLabel(label, SwingConstants.CENTER);
+                    cp.add(gustiLabel);
                 });
+
+        ((JComponent) cp).setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Margini esterni
     }
 
     private void addMesiPopolari(Container cp, Map<String, Integer> mesiPopolari) {
+        this.esteticaAggregate(cp, "Mesi popolari");
         mesiPopolari.keySet().stream()
                 .sorted()
                 .forEach(name -> {
                     Integer value = mesiPopolari.get(name);
-                    var label = "- " + name + " [" + value + " ordini]";
-                    cp.add(new JLabel(label), SwingConstants.CENTER);
+                    var label = name + " [" + value + " ordini]";
+                    JLabel mesiLabel = new JLabel(label, SwingConstants.CENTER);
+                    cp.add(mesiLabel);
                 });
+        ((JComponent) cp).setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Margini esterni
     }
 
     private void addProdottiPopolari(Container cp, Map<String, Integer> prodottiPopolari){
+        this.esteticaAggregate(cp, "Prodotti popolari");
         prodottiPopolari.keySet().stream()
                 .sorted()
                 .forEach(name -> {
-                    System.out.println(name);
                     Integer value = prodottiPopolari.get(name);
-                    System.out.println("value: "+value+"   Name: "+name.toString());
-                    var label = "- " + name + " [" + value + "]";
-                    cp.add(new JLabel(label), SwingConstants.CENTER);
+                    var label = name + " [" + value + "]";
+                    JLabel prodottiLabel = new JLabel(label, SwingConstants.CENTER);
+                    cp.add(prodottiLabel);
                 });
+        ((JComponent) cp).setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Margini esterni
     }
+
+    private void esteticaAggregate(Container cp, String text) {
+        cp.setLayout(new GridLayout(0, 1, 10, 10));
+        JLabel titleLabel = new JLabel(text, SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        cp.add(titleLabel);
+    }
+
+    /* ******************************************** */
+    
+    
     
     private void addPreviews(Container cp, List<ProductPreview> productPreviews) {
         productPreviews.forEach(preview -> {
