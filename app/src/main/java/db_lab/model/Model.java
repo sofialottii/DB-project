@@ -1,5 +1,6 @@
 package db_lab.model;
 
+import db_lab.data.Prodotti;
 import db_lab.data.Product;
 import db_lab.data.ProductPreview;
 import java.sql.Connection;
@@ -18,7 +19,9 @@ public interface Model {
 
     public String findDipendente(String dipendenteCF, String password);
 
-    public Map<String,Float> listProdottiPopolari();
+    public Map<String,Float> listGustiPopolari();
+
+    public Map<String,Integer> listProdottiPopolari();
 
     public Map<String,Integer> listMesiPopolari();
 

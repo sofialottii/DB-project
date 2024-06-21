@@ -1,10 +1,12 @@
 package db_lab.data;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 public final class Composizioni {
     public final String CF;
@@ -57,25 +59,34 @@ public final class Composizioni {
     }
 
     public final class DAO {
-        /*public static final Map<String,Float> listProdottiPopolari(Connection connection) {
+        public static final Map<String,Integer> listProdottiPopolari(Connection connection) {
             try (
                 var statement = connection.prepareStatement(Queries.PRODOTTO_POPOLARE); //uso prepareStatement e non il metodo di Utility prepare
                 var resultSet = statement.executeQuery();                           //perchè non ho dei parametri nella query
                 
             ) {
-                var prodottiPopolari = new HashMap<String,Float>();
+                var prodottiPopolari = new HashMap<String,Integer>();
                 while (resultSet.next()) {
                     var codProdotto = resultSet.getString("p.codProdotto");
                     var tipoProdotto = resultSet.getString("p.tipoProdotto");
+                    var tipoGelato = resultSet.getString("p.tipoGelato");
                     var numeroGusti = resultSet.getInt("p.numeroGusti");
-                    var totaleQuantita = resultSet.getFloat("totaleQuantita");
-                    gustiPopolari.put(nomeGusto,totaleQuantita);
+                    var pesoVaschetta = resultSet.getFloat("p.pesoVaschetta");
+                    var totaleQuantita = resultSet.getInt("totaleQuantita");
+                    
+                    String stringa = codProdotto+" "+tipoProdotto;
+                    stringa = tipoProdotto.equals("Gelato") ? stringa+" "+tipoGelato+", "+numeroGusti+" gusti" : 
+                        stringa+" "+pesoVaschetta+" grammi";
+                    
+                    //var prodotto = new Prodotti(codProdotto, tipoProdotto, tipoGelato, Optional.of(numeroGusti), Optional.empty(), Optional.of(pesoVaschetta), Optional.empty());
+                    
+                    prodottiPopolari.put(stringa,totaleQuantita);
                 }
-                return gustiPopolari;
+                return prodottiPopolari;
             } catch(Exception e) {
                 throw new DAOException(e);
             }
         
-        }*/
+        }
     }
 }

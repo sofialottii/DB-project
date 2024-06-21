@@ -4,17 +4,17 @@ public final class Queries {
     public static final String TAGS_FOR_PRODUCT =
             // query che cambia ogni volta che la eseguiamo
             """
-                    select t.tag_name
-                    from TAGGED t
-                    where t.product_code = ?
-                    """;
+            select t.tag_name
+            from TAGGED t
+            where t.product_code = ?
+            """;
 
     public static final String LIST_PRODUCTS =
             // query statica senza parametri
             """
-                    select p.code, p.name
-                    from PRODUCT p
-                    """;
+            select p.code, p.name
+            from PRODUCT p
+            """;
 
     public static final String PRODUCT_COMPOSITION = """
             select m.code, m.description, c.percent
@@ -46,7 +46,8 @@ public final class Queries {
                         VALUES ( ?, CURDATE(), CURTIME(), ?, ?, ?);
             """;
 
-    public static final String GUSTO_POPOLARE = """
+    public static final String GUSTO_POPOLARE =
+            """
             SELECT nomeGusto, SUM(quantita) AS totaleQuantita
             FROM DOSI_GUSTO
             GROUP BY nomeGusto
@@ -60,11 +61,27 @@ public final class Queries {
             );
             """;
 
-    public static final String PRODOTTO_POPOLARE = """
+    /*public static final String PRODOTTO_POPOLARE = """
             SELECT codProdotto, SUM(quantita) AS totaleQuantita
             FROM composizioni
             GROUP BY codProdotto
             HAVING SUM(quantita) = (
+                SELECT MAX(totaleQuantita)
+                FROM (
+                    SELECT SUM(quantita) AS totaleQuantita
+                    FROM composizioni
+                    GROUP BY codProdotto
+                ) AS Sottoquery
+            );
+            """;*/
+
+    public static final String PRODOTTO_POPOLARE =
+            """
+            SELECT p.codProdotto, p.tipoProdotto, p.tipoGelato, p.numeroGusti, p.pesoVaschetta, SUM(c.quantita) AS totaleQuantita
+            FROM composizioni c
+            JOIN PRODOTTI p ON c.codProdotto = p.codProdotto
+            GROUP BY p.codProdotto, p.tipoProdotto, p.numeroGusti, p.pesoVaschetta
+            HAVING SUM(c.quantita) = (
                 SELECT MAX(totaleQuantita)
                 FROM (
                     SELECT SUM(quantita) AS totaleQuantita

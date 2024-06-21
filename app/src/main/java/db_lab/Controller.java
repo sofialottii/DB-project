@@ -53,15 +53,7 @@ public final class Controller {
         }
     }
 
-    public void showGustoPopolare() {
-        var result = this.model.listProdottiPopolari();
-        this.view.gustoPopolarePage(result);
-    }
-
-    public void showBestMese(){
-        var mesi = this.model.listMesiPopolari();
-        this.view.mesiPopolariPage(mesi);
-    }
+    
 
     public void createOrdini(String dipendente){
         /*deve visualizzare una pagina per poter creare l'ordine, in quella pagina poi verrà 
@@ -86,9 +78,20 @@ public final class Controller {
 
     //FUNZIONALITA AGGREGATE
 
+    public void showGustoPopolare() {
+        var result = this.model.listGustiPopolari();
+        this.view.gustoPopolarePage(result);
+    }
+
+    public void showBestMese() {
+        var mesi = this.model.listMesiPopolari();
+        this.view.mesiPopolariPage(mesi);
+    }
 
 
     public void showProdottoPopolare(){
+        var prodotti = this.model.listProdottiPopolari();
+        this.view.prodottiPopolariPage(prodotti);
 
     }
 

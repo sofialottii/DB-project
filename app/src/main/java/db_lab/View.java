@@ -1,5 +1,6 @@
 package db_lab;
 
+import db_lab.data.Prodotti;
 import db_lab.data.Product;
 import db_lab.data.ProductPreview;
 import java.awt.Container;
@@ -156,15 +157,21 @@ public final class View {
         });
     }
 
+    public void prodottiPopolariPage(Map<String, Integer> prodottiPopolari){
+        freshPane(cp -> {
+            this.addProdottiPopolari(cp, prodottiPopolari);
+            // cp.add(new JLabel(, SwingConstants.CENTER));
+            cp.add(button("Logout", () -> this.getController().userRequestedInitialPage()));
+        });
+    }
+
     private void addGustiPopolari(Container cp, Map<String, Float> gustiPopolari) {
-        System.out.println("ciao");
         gustiPopolari.keySet().stream()
                 .sorted()
                 .forEach(name -> {
                     Float value = gustiPopolari.get(name);
                     var label = "- " + name + " [" + value + " kg]";
                     cp.add(new JLabel(label), SwingConstants.CENTER);
-                    System.out.println("ciao2");
                 });
     }
 
@@ -177,7 +184,18 @@ public final class View {
                     cp.add(new JLabel(label), SwingConstants.CENTER);
                 });
     }
-    
+
+    private void addProdottiPopolari(Container cp, Map<String, Integer> prodottiPopolari){
+        prodottiPopolari.keySet().stream()
+                .sorted()
+                .forEach(name -> {
+                    System.out.println(name);
+                    Integer value = prodottiPopolari.get(name);
+                    System.out.println("value: "+value+"   Name: "+name.toString());
+                    var label = "- " + name + " [" + value + "]";
+                    cp.add(new JLabel(label), SwingConstants.CENTER);
+                });
+    }
     
     private void addPreviews(Container cp, List<ProductPreview> productPreviews) {
         productPreviews.forEach(preview -> {

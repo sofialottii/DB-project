@@ -62,7 +62,7 @@ public final class DosiGusto {
 
     public final class DAO {
 
-        public static final Map<String,Float> listProdottiPopolari(Connection connection) {
+        public static final Map<String,Float> listGustiPopolari(Connection connection) {
             try (
                 var statement = connection.prepareStatement(Queries.GUSTO_POPOLARE); //uso prepareStatement e non il metodo di Utility prepare
                 var resultSet = statement.executeQuery();                           //perchè non ho dei parametri nella query
