@@ -1,7 +1,9 @@
 package db_lab.data;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Objects;
+import java.sql.Connection;
 
 public final class Partecipazioni {
     
@@ -49,6 +51,22 @@ public final class Partecipazioni {
     }
 
     public final class DAO {
+        public static List<Turni> listTurniDipendente(Connection connection, String dipendenteCF) {
+            try (
+                    var statement = DAOUtils.prepare(connection, Queries.SHOW_TURNI, dipendenteCF);
+                    var resultSet = statement.executeQuery();) {
+                List<Turni> turni = new ArrayList<>();
+                while (resultSet.next()) {
+                    var giornoSettimana = resultSet.getString("p.giornoSettimana");
+                    var fasciaOraria = resultSet.getString("p.fasciaOraria");
+                    Turni turno = new Turni(giornoSettimana, fasciaOraria);
+                    turni.add(turno);
+                }
+                return turni;
 
+            } catch (Exception e) {
+                throw new DAOException(e);
+            }
+        }
     }
 }

@@ -38,7 +38,9 @@ public final class Queries {
                         """;
 
         public static final String SHOW_TURNI = """
-
+                        SELECT p.giornoSettimana, p.fasciaOraria
+                        FROM partecipazioni p
+                        WHERE p.CF = ?;
                         """;
 
         public static final String CREATE_ORDINI = """

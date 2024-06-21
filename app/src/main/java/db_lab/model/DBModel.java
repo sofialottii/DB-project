@@ -4,9 +4,12 @@ import db_lab.data.Composizioni;
 import db_lab.data.Dipendenti;
 import db_lab.data.DosiGusto;
 import db_lab.data.Ordini;
+import db_lab.data.Partecipazioni;
 import db_lab.data.Prodotti;
 import db_lab.data.Product;
 import db_lab.data.ProductPreview;
+import db_lab.data.Turni;
+
 import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
@@ -77,5 +80,10 @@ public final class DBModel implements Model {
     @Override
     public String calculateRicavoMensile() {
         return Ordini.DAO.calculateRicavoMensile(connection);
+    }
+
+    @Override
+    public List<Turni> listTurniDipendente(String dipendente) {
+        return Partecipazioni.DAO.listTurniDipendente(connection, dipendente);
     }
 }

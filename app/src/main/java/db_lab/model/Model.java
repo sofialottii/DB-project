@@ -3,6 +3,8 @@ package db_lab.model;
 import db_lab.data.Prodotti;
 import db_lab.data.Product;
 import db_lab.data.ProductPreview;
+import db_lab.data.Turni;
+
 import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +28,8 @@ public interface Model {
     public Map<String,Integer> listMesiPopolari();
 
     public String calculateRicavoMensile();
+
+    public List<Turni> listTurniDipendente(String dipendente);
 
     // Create a model that connects to a database using the given connection.
     //

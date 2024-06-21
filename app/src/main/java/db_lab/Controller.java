@@ -62,10 +62,8 @@ public final class Controller {
     }
 
     public void showTurni(String dipendente) {
-        /*
-         * deve visualizzare una pagina per poter visualizzare i turni del dipendente, in quella pagina poi
-         * verrà presa la query dal model
-         */
+        var turni = this.model.listTurniDipendente(dipendente);
+        this.view.turniDipendentePage(turni, dipendente);
     }
 
     public void createDoseGusto(String dipendente){

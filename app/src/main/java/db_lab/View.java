@@ -3,6 +3,8 @@ package db_lab;
 import db_lab.data.Prodotti;
 import db_lab.data.Product;
 import db_lab.data.ProductPreview;
+import db_lab.data.Turni;
+
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
@@ -16,6 +18,8 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import javax.swing.*;
+import java.util.Collections;
+import java.util.Comparator;
 
 public final class View {
 
@@ -135,9 +139,25 @@ public final class View {
             cp.add(button("Crea nuova dose gusto", () -> this.getController().createDoseGusto(dipendente)));
             cp.add(button("Iscrivi cliente", () -> this.getController().createCliente(dipendente)));
             cp.add(button("Logout", () -> this.getController().userRequestedInitialPage()));
-
         });
     }
+
+    public void turniDipendentePage(List<Turni> turni, String dipendente) {
+        freshPane(cp -> {
+            this.addTurni(cp, turni);
+            // cp.add(new JLabel(, SwingConstants.CENTER));
+            cp.add(button("Go Back", () -> this.privateArea(dipendente)));
+        });
+    }
+
+    private void addTurni(Container cp, List<Turni> turni) {
+        Collections.sort(turni, Comparator.comparing(t -> t.giornoSettimana));
+        turni.forEach(turno -> {
+            var label = "- " + turno.giornoSettimana + " [" + turno.fasciaOraria + "]";
+            cp.add(new JLabel(label), SwingConstants.CENTER);
+        });
+    }
+
 
     //FUNZIONI AGGREGATE
 
