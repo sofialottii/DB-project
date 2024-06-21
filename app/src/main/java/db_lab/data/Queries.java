@@ -74,23 +74,6 @@ public final class Queries {
             );
             """;
 
-<<<<<<< HEAD
-    public static final String PRODOTTO_POPOLARE = 
-        """
-        SELECT p.codProdotto, p.tipoProdotto, p.numeroGusti, p.pesoVaschetta, SUM(c.quantita) AS totaleQuantita
-        FROM composizioni c
-        JOIN PRODOTTI p ON c.codProdotto = p.codProdotto
-        GROUP BY p.codProdotto, p.tipoProdotto, p.numeroGusti, p.pesoVaschetta
-        HAVING SUM(c.quantita) = (
-            SELECT MAX(totaleQuantita)
-            FROM (
-                SELECT SUM(quantita) AS totaleQuantita
-                FROM composizioni
-                GROUP BY codProdotto
-            ) AS Sottoquery
-        );
-        """;
-=======
     public static final String MESE_POPOLARE = """
             SELECT DATE_FORMAT(data, '%M') AS mese, COUNT(*) AS numeroOrdini
             FROM ORDINI
@@ -103,7 +86,5 @@ public final class Queries {
                     GROUP BY DATE_FORMAT(data, '%M')
                 ) AS Sottoquery
             );
->>>>>>> a2f32f6f771d917f31178e7a303a1c3d16ec1b6b
-
             """;
 }
