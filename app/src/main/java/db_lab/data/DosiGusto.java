@@ -9,11 +9,11 @@ import java.util.Objects;
 
 public final class DosiGusto {
     
-    private final String CF;
-    private final String data;
-    private final String orario;
-    private final float quantita;
-    private final String nomeGusto;
+    public final String CF;
+    public final String data;
+    public final String orario;
+    public final float quantita;
+    public final String nomeGusto;
 
     public DosiGusto(String CF, String data, String orario, float quantita, String nomeGusto) {
         this.CF = CF;
@@ -79,6 +79,17 @@ public final class DosiGusto {
                 throw new DAOException(e);
             }
         
+        }
+
+        public static void registraDose(Connection connection, String dipendenteCF, String gusto, Float quantita) {
+            try (
+                    var statement = DAOUtils.prepare(connection, Queries.CREA_DOSE, dipendenteCF, quantita, gusto);
+                    ) {
+                    statement.executeUpdate();
+                
+            } catch (Exception e) {
+                throw new DAOException(e);
+            }
         }
 
     }

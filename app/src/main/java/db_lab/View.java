@@ -161,15 +161,31 @@ public final class View {
 
     //NUOVA DOSE GUSTO
     
-    public void creaNuovaDoseGusto(List<String> allGusti){
+    public void scegliGustoPerDose(String dipendente, List<String> allGusti){
         freshPane( cp -> { 
             allGusti.forEach(gusto -> {
                 var label = " [ " + gusto + " ] ";
-                cp.add(clickableLabel(label, () -> this.getController().userRequestedInitialPage()));
+                cp.add(clickableLabel(label, () -> this.creaDoseGusto(dipendente, gusto)));
                 // cp.add(clickableLabel(label, () ->
                 // this.getController().userClickedPreview(gusto)));
             });
         });
+    }
+
+    public void creaDoseGusto(String dipendente, String gusto){
+        freshPane( cp -> {
+            cp.add(new JLabel("Selezionare quantità (in kg)", SwingConstants.CENTER));
+            final JTextField quantita = new JTextField("", SwingConstants.CENTER);
+            cp.add(quantita);
+
+            cp.add(button("Crea dose", () -> {
+                this.getController().createDoseEffettiva(dipendente, gusto, Float.valueOf(quantita.getText()));
+                this.privateArea(dipendente);
+            }));
+
+            //cp.add(button("Go Back", () -> this.privateArea(dipendente)));
+        });
+        
     }
 
 

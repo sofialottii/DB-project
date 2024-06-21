@@ -129,4 +129,11 @@ public final class Queries {
         FROM GUSTI
         WHERE disponibilita = 'Si' OR disponibilita IS NULL;
         """;
+
+        public static final String CREA_DOSE =
+        """
+        INSERT INTO DOSI_GUSTO (CF, data, orario, quantita, nomeGusto)
+        VALUES (?, CURDATE(), CURTIME(), ?, ?);
+
+        """;
 }

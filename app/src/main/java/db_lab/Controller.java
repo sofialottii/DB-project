@@ -68,7 +68,11 @@ public final class Controller {
 
     public void createDoseGusto(String dipendente){
         var gusti = this.model.listAllGusti();
-        this.view.creaNuovaDoseGusto(gusti);
+        this.view.scegliGustoPerDose(dipendente, gusti);
+    }
+
+    public void createDoseEffettiva(String dipendente, String gusto, Float quantita){
+        this.model.registraDose(dipendente, gusto, quantita);
     }
 
     public void createCliente(String dipendente){

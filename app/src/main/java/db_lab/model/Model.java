@@ -34,6 +34,8 @@ public interface Model {
 
     public List<String> listAllGusti();
 
+    public void registraDose(String dipendente, String gusto, Float quantita);
+
     // Create a model that connects to a database using the given connection.
     //
     public static Model fromConnection(Connection connection) {

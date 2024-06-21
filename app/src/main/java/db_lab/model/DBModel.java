@@ -92,4 +92,9 @@ public final class DBModel implements Model {
     public List<String> listAllGusti() {
         return Gusti.DAO.listAllGusti(connection);
     }
+
+    @Override
+    public void registraDose(String dipendente, String gusto, Float quantita){
+        DosiGusto.DAO.registraDose(connection, dipendente, gusto, quantita);
+    }
 }
