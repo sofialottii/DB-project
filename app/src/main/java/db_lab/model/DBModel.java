@@ -57,7 +57,7 @@ public final class DBModel implements Model {
     }
 
     @Override
-    public Map<String, Float> listProdottiPopolari() {
-        return DosiGusto.DAO.listProdottiPopolari(connection);
+    public Map<String, Float> listGustiPopolari() {
+        return DosiGusto.DAO.listGustiPopolari(connection);
     }
 }
