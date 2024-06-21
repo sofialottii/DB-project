@@ -70,6 +70,31 @@ public final class Queries {
 
     public static final String PRODOTTO_POPOLARE = 
         """
-                
+        SELECT codProdotto, SUM(quantita) AS totaleQuantita
+        FROM composizioni
+        GROUP BY codProdotto
+        HAVING SUM(quantita) = (
+            SELECT MAX(totaleQuantita)
+            FROM (
+                SELECT SUM(quantita) AS totaleQuantita
+                FROM composizioni
+                GROUP BY codProdotto
+            ) AS Sottoquery
+        );
+        """;
+
+        public static final String MESE_POPOLARE =
+        """
+        SELECT MONTH(data) AS mese, COUNT(*) AS numeroOrdini
+        FROM ORDINI
+        GROUP BY mese
+        HAVING COUNT(*) = (
+            SELECT MAX(numeroOrdini)
+            FROM (
+                SELECT COUNT(*) AS numeroOrdini
+                FROM ORDINI
+                GROUP BY MONTH(data)
+            ) AS Sottoquery
+        );
         """;
 }
