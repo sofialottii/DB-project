@@ -95,8 +95,6 @@ public final class Controller {
 
     }
 
-    
-
     public void showRicavoMensile(){
 
     }

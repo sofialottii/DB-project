@@ -104,4 +104,19 @@ public final class Queries {
                 ) AS Sottoquery
             );
             """;
+
+    public static final String RICAVO_MENSILE =
+        """
+                
+        """;
+
+    public static final String CALORIE_TOTALI =
+        """
+        SELECT g.nomeGusto, SUM(i.calorie) AS calorieTotali
+        FROM GUSTI g
+        JOIN costituzioni c ON g.nomeGusto = c.nomeGusto
+        JOIN INGREDIENTI i ON c.codIngrediente = i.codIngrediente
+        WHERE g.nomeGusto = '<nomeGusto>'
+        GROUP BY g.nomeGusto;
+        """;
 }
