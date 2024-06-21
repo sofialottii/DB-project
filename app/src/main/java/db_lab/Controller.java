@@ -96,7 +96,8 @@ public final class Controller {
     }
 
     public void showRicavoMensile(){
-
+        var ricavo = this.model.calculateRicavoMensile();
+        this.view.ricavoMensilePage(ricavo);
     }
 
     public void showFasciaOraria(){

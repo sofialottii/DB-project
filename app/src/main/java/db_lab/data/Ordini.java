@@ -85,6 +85,25 @@ public final class Ordini {
             }
         
         }
+
+        public static final String calculateRicavoMensile(Connection connection) {
+            try (
+                var statement = connection.prepareStatement(Queries.RICAVO_MENSILE); //uso prepareStatement e non il metodo di Utility prepare
+                var resultSet = statement.executeQuery();                           //perchè non ho dei parametri nella query
+                
+            ) {
+                String ricavoMensile = "Ancora nessun ordine fatto in questo mese";
+                if (resultSet.next()) {
+                    var mese = resultSet.getString("mese");
+                    var ricavo = resultSet.getFloat("ricavoMensile");
+                    ricavoMensile = mese + " " + ricavo;
+                }
+                return ricavoMensile;
+            } catch(Exception e) {
+                throw new DAOException(e);
+            }
+        
+        }
     }
 
     

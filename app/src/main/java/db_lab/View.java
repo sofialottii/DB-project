@@ -165,6 +165,14 @@ public final class View {
         });
     }
 
+    public void ricavoMensilePage(String ricavo){
+        freshPane(cp -> {
+            cp.add(new JLabel(ricavo));
+            // cp.add(new JLabel(, SwingConstants.CENTER));
+            cp.add(button("Logout", () -> this.getController().userRequestedInitialPage()));
+        });
+    }
+
     private void addGustiPopolari(Container cp, Map<String, Float> gustiPopolari) {
         gustiPopolari.keySet().stream()
                 .sorted()

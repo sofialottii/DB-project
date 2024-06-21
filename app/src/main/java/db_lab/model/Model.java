@@ -25,6 +25,8 @@ public interface Model {
 
     public Map<String,Integer> listMesiPopolari();
 
+    public String calculateRicavoMensile();
+
     // Create a model that connects to a database using the given connection.
     //
     public static Model fromConnection(Connection connection) {

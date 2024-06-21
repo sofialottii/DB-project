@@ -73,4 +73,9 @@ public final class DBModel implements Model {
     public Map<String, Integer> listProdottiPopolari() {
         return Composizioni.DAO.listProdottiPopolari(connection);
     }
+
+    @Override
+    public String calculateRicavoMensile() {
+        return Ordini.DAO.calculateRicavoMensile(connection);
+    }
 }
