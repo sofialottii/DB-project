@@ -30,4 +30,12 @@ public final class Queries {
         from PRODUCT p
         where p.code = ?
         """;
+
+    public static final String LOGIN_DIPENDENTE =
+        """
+        SELECT *
+        FROM DIPENDENTI
+        WHERE CF = ?
+        AND password = ?
+        """;
 }
