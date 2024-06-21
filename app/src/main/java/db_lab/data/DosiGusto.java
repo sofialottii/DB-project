@@ -64,7 +64,7 @@ public final class DosiGusto {
 
         public static final Map<String,Float> listProdottiPopolari(Connection connection) {
             try (
-                var statement = connection.prepareStatement(Queries.GUSTO_POPOLARE); //uso prepareStatement e non il metodo di Utility prepare
+                var statement = connection.prepareStatement(Queries.MESE_POPOLARE); //uso prepareStatement e non il metodo di Utility prepare
                 var resultSet = statement.executeQuery();                           //perchè non ho dei parametri nella query
                 
             ) {

@@ -3,6 +3,9 @@ package db_lab.data;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Map;
+import java.util.HashMap;
+import java.sql.Connection;
 
 public final class Ordini {
 
@@ -64,7 +67,24 @@ public final class Ordini {
     }
 
     public final class DAO {
-
+        public static final Map<String, Integer> listMesiPopolari(Connection connection) {
+            try (
+                var statement = connection.prepareStatement(Queries.GUSTO_POPOLARE); //uso prepareStatement e non il metodo di Utility prepare
+                var resultSet = statement.executeQuery();                           //perchè non ho dei parametri nella query
+                
+            ) {
+                var mesiPopolari = new HashMap<String, Integer>();
+                while (resultSet.next()) {
+                    var mese = resultSet.getString("mese");
+                    var numeroOrdini = resultSet.getInt("numeroOrdini");
+                    mesiPopolari.put(mese,numeroOrdini);
+                }
+                return mesiPopolari;
+            } catch(Exception e) {
+                throw new DAOException(e);
+            }
+        
+        }
     }
 
     
