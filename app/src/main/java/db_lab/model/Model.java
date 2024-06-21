@@ -18,7 +18,9 @@ public interface Model {
 
     public String findDipendente(String dipendenteCF, String password);
 
-    public Map<String,Float> listGustiPopolari();
+    public Map<String,Float> listProdottiPopolari();
+
+    public Map<String,Integer> listMesiPopolari();
 
     // Create a model that connects to a database using the given connection.
     //

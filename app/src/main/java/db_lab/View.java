@@ -148,12 +148,32 @@ public final class View {
         });
     }
 
+    public void mesiPopolariPage(Map<String, Integer> result) {
+        freshPane(cp -> {
+            this.addMesiPopolari(cp, result);
+            // cp.add(new JLabel(, SwingConstants.CENTER));
+            cp.add(button("Logout", () -> this.getController().userRequestedInitialPage()));
+        });
+    }
+
     private void addGustiPopolari(Container cp, Map<String, Float> gustiPopolari) {
+        System.out.println("ciao");
         gustiPopolari.keySet().stream()
                 .sorted()
                 .forEach(name -> {
                     Float value = gustiPopolari.get(name);
                     var label = "- " + name + " [" + value + " kg]";
+                    cp.add(new JLabel(label), SwingConstants.CENTER);
+                    System.out.println("ciao2");
+                });
+    }
+
+    private void addMesiPopolari(Container cp, Map<String, Integer> mesiPopolari) {
+        mesiPopolari.keySet().stream()
+                .sorted()
+                .forEach(name -> {
+                    Integer value = mesiPopolari.get(name);
+                    var label = "- " + name + " [" + value + " ordini]";
                     cp.add(new JLabel(label), SwingConstants.CENTER);
                 });
     }

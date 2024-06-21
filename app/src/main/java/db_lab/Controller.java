@@ -54,8 +54,13 @@ public final class Controller {
     }
 
     public void showGustoPopolare() {
-        var result = this.model.listGustiPopolari();
+        var result = this.model.listProdottiPopolari();
         this.view.gustoPopolarePage(result);
+    }
+
+    public void showBestMese(){
+        var mesi = this.model.listMesiPopolari();
+        this.view.mesiPopolariPage(mesi);
     }
 
     public void createOrdini(String dipendente){
@@ -87,9 +92,7 @@ public final class Controller {
 
     }
 
-    public void showBestMese(){
-
-    }
+    
 
     public void showRicavoMensile(){
 

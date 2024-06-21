@@ -2,6 +2,7 @@ package db_lab.model;
 
 import db_lab.data.Dipendenti;
 import db_lab.data.DosiGusto;
+import db_lab.data.Ordini;
 import db_lab.data.Product;
 import db_lab.data.ProductPreview;
 import java.sql.Connection;
@@ -57,7 +58,12 @@ public final class DBModel implements Model {
     }
 
     @Override
-    public Map<String, Float> listGustiPopolari() {
-        return DosiGusto.DAO.listGustiPopolari(connection);
+    public Map<String, Float> listProdottiPopolari() {
+        return DosiGusto.DAO.listProdottiPopolari(connection);
+    }
+
+    @Override
+    public Map<String, Integer> listMesiPopolari() {
+        return Ordini.DAO.listMesiPopolari(connection);
     }
 }
