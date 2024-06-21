@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="db_lab.AppTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2024-05-09T09:58:47" hostname="CAPPE_LAPTOP" time="0.092">
+<testsuite name="db_lab.AppTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2024-06-21T23:14:00" hostname="COMPUTER" time="0.178">
   <properties/>
-  <testcase name="productTags" classname="db_lab.AppTest" time="0.069"/>
-  <testcase name="productPreviews" classname="db_lab.AppTest" time="0.006"/>
-  <testcase name="product" classname="db_lab.AppTest" time="0.012"/>
-  <testcase name="productComposition" classname="db_lab.AppTest" time="0.004"/>
+  <testcase name="productTags" classname="db_lab.AppTest" time="0.138"/>
+  <testcase name="productPreviews" classname="db_lab.AppTest" time="0.01"/>
+  <testcase name="product" classname="db_lab.AppTest" time="0.021"/>
+  <testcase name="productComposition" classname="db_lab.AppTest" time="0.006"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

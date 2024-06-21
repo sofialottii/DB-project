@@ -41,6 +41,8 @@ public interface Model {
     public void registraCliente(String dipendenteCF, String clienteCF, String nomeCliente, String cognomeCliente, String dataNascita,
     String email);
 
+    public boolean clientePresente(String clienteCF);
+
     public boolean verificaSePuoiCancellareCliente(String clienteCF);
 
     public void cancellaCliente(String clienteCF);

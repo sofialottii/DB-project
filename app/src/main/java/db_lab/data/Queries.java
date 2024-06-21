@@ -137,6 +137,13 @@ public final class Queries {
 
         """;
 
+        public static final String VISUALIZZA_ESISTENZA_CLIENTE =
+        """
+        SELECT COUNT(*)
+        FROM CLIENTI
+        WHERE CF = ?;      
+        """;
+
         public static final String CREA_CLIENTE =
         """
         INSERT INTO CLIENTI (CF, nome, cognome, dataNascita, e_mail, dataIscrizione, dataDisiscrizione, Reg_CF)

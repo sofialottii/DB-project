@@ -119,4 +119,9 @@ public final class DBModel implements Model {
     public void cancellaCliente(String clienteCF) {
         Clienti.DAO.cancellaCliente(connection, clienteCF);
     }
+
+    @Override
+    public boolean clientePresente(String clienteCF) {
+        return Clienti.DAO.clientePresente(connection, clienteCF);
+    }
 }

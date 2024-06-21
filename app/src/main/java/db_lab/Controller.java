@@ -5,30 +5,8 @@ import db_lab.data.ProductPreview;
 import db_lab.model.Model;
 import java.util.Objects;
 
-// The controller provides a holistic description of how the outside world can
-// interact with our application: each public method is written as
-//
-//   subject + action + object (e.g. user + clicked + preview)
-//
-// So just by reading all the methods we know of all the possible interactions
-// that can happen in our app. This makes it simpler to track all the possible
-// actions that can take place as the application grows.
-//
 public final class Controller {
 
-    // The controller holds a reference to the:
-    //   - model: to have it load new data
-    //   - view: to update it as new data is loaded
-    //
-    //    ┌────── updates ──────┐
-    //    │                     │
-    // ┌──▼┐                 ┌─┴────────┐ updates ┌──────┐
-    // │view│                 │controller├─────────►model│
-    // └──┬─┘                 └─▲───────┘         └──────┘
-    //    │       notifies      │
-    //    └────── of user's ────┘
-    //            actions
-    //
     private final Model model;
     private final View view;
 
@@ -75,14 +53,23 @@ public final class Controller {
         this.model.registraDose(dipendente, gusto, quantita);
     }
 
-    public void createCliente(String dipendenteCF, String clienteCF, String nomeCliente, String cognomeCliente, String dataNascita,
+    public boolean createCliente(String dipendenteCF, String clienteCF, String nomeCliente, String cognomeCliente, String dataNascita,
         String email){
-        this.model.registraCliente(dipendenteCF, clienteCF, nomeCliente, cognomeCliente, dataNascita, email);
+        /*controllo che il CF non ci sia*/
+        if (this.model.clientePresente(clienteCF) || clienteCF.isEmpty() || nomeCliente.isEmpty() || cognomeCliente.isEmpty()
+        || !(dataNascita.length() == 10) ){
+            return false;
+
+        } else {
+            this.model.registraCliente(dipendenteCF, clienteCF, nomeCliente, cognomeCliente, dataNascita, email);
+            return true;
+        }
     }
 
     public boolean deleteCliente(String clienteCF){
         /*controllo che ci sia il CF e non sia già stato Rimosso */
         boolean esiste = this.model.verificaSePuoiCancellareCliente(clienteCF);
+
         if (esiste){
             this.model.cancellaCliente(clienteCF);
         } 

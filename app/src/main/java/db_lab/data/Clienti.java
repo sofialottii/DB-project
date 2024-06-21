@@ -95,6 +95,23 @@ public final class Clienti {
             }
         }
 
+        public static boolean clientePresente(Connection connection, String clienteCF){
+            try (
+                var statement = DAOUtils.prepare(connection, Queries.VISUALIZZA_ESISTENZA_CLIENTE, clienteCF);
+                var resultSet = statement.executeQuery();
+            ) { if (resultSet.next()) {
+                    var count = resultSet.getInt(1); //usa l'indice della colonna
+                    return count == 1;
+                } else {
+                    return false;
+                }
+            }catch( Exception e)
+            {
+            throw new DAOException(e);
+            }
+
+        }
+
         public static boolean verificaSePuoiCancellareCliente(Connection connection, String clienteCF) {
             try (
                     var statement = DAOUtils.prepare(connection, Queries.VISUALIZZA_DETERMINATO_CLIENTE, clienteCF);

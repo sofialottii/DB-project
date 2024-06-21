@@ -278,13 +278,18 @@ public final class View {
 
     public void creaDoseGusto(String dipendente, String gusto){
         freshPane( cp -> {
-            cp.add(new JLabel("Selezionare quantita (in kg)", SwingConstants.CENTER));
+            JLabel quantitaLabel = new JLabel("Selezionare quantita (in kg)", SwingConstants.CENTER); 
+            cp.add(quantitaLabel);
             final JTextField quantita = new JTextField("", SwingConstants.CENTER);
             cp.add(quantita);
 
             cp.add(button("Crea dose", () -> {
-                this.getController().createDoseEffettiva(dipendente, gusto, Float.valueOf(quantita.getText()));
-                this.privateArea(dipendente);
+                if (quantita.getText().isEmpty()){
+                    showErrorLabel(cp, quantitaLabel, "Quantita non valida", "Selezionare quantita (in kg)");
+                } else {
+                    this.getController().createDoseEffettiva(dipendente, gusto, Float.valueOf(quantita.getText()));
+                    this.privateArea(dipendente);
+                }
             }));
 
             JButton goBackButton = button("Go Back", () -> this.privateArea(dipendente));
@@ -298,7 +303,8 @@ public final class View {
 
     public void createClientePage(String dipendente){
         freshPane(cp -> {
-            cp.add(new JLabel("codice fiscale cliente", SwingConstants.CENTER));
+            JLabel cfLabel = new JLabel("codice fiscale cliente", SwingConstants.CENTER);
+            cp.add(cfLabel);
             final JTextField clienteCF = new JTextField("", SwingConstants.CENTER);
             cp.add(clienteCF);
             cp.add(new JLabel(" "));
@@ -320,10 +326,14 @@ public final class View {
             
             cp.add(button("Crea",
                     () -> {
-                        this.getController().createCliente(dipendente, clienteCF.getText(), nomeCliente.getText(),
+                        boolean x = this.getController().createCliente(dipendente, clienteCF.getText(), nomeCliente.getText(),
                         cognomeCliente.getText(), dataNascita.getText(), email.getText());
-                        
-                        this.privateArea(dipendente);
+                        if (x){
+                            this.privateArea(dipendente);
+                        } else {
+                            showErrorLabel(cp, cfLabel, "Uno o piu campi errati o CF gia presente",
+                            "codice fiscale cliente");
+                        }
                     }));
             JButton goBackButton = button("Go Back", () -> this.privateArea(dipendente));
             cp.add(goBackButton);
@@ -347,7 +357,8 @@ public final class View {
                         if (x){
                             this.privateArea(dipendente);
                         } else {
-                            showErrorLabel(cp, cfLabel);
+                            showErrorLabel(cp, cfLabel, "CF cliente inesistente o gia disiscritto", 
+                                    "codice fiscale cliente da disiscrivere");
                         }
                         
                     }));
@@ -356,13 +367,13 @@ public final class View {
         });
     }
 
-    private void showErrorLabel(Container cp, JLabel label) {
-        label.setText("CF Cliente errato");
+    private void showErrorLabel(Container cp, JLabel label, String newText, String oldText) {
+        label.setText(newText);
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                label.setText("Codice fiscale cliente da disiscrivere");
+                label.setText(oldText);
                 timer.cancel();
             }
         }, 3000); // 3000 millisecondi = 3 secondi
