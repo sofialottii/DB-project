@@ -1,7 +1,9 @@
 package db_lab.data;
 
+import java.sql.Connection;
 import java.util.List;
 import java.util.Objects;
+import java.util.ArrayList;
 
 public final class Gusti {
 
@@ -63,7 +65,23 @@ public final class Gusti {
     }
 
     public final class DAO {
+        public static List<String> listAllGusti(Connection connection) {
+            try (
+                    var statement = connection.prepareStatement(Queries.VISUALIZZA_ALLGUSTI); //uso prepareStatement e non il metodo di Utility prepare
+                var resultSet = statement.executeQuery();                           //perchè non ho dei parametri nella query
+            )
+            {
+                List<String> gusti = new ArrayList<>();
+                while (resultSet.next()) {
+                    var nomeGusto = resultSet.getString("nomeGusto");
+                    gusti.add(nomeGusto);
+                }
+                return gusti;
 
+            } catch (Exception e) {
+                throw new DAOException(e);
+            }
+        }
     }
 
     

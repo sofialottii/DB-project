@@ -122,4 +122,11 @@ public final class Queries {
                         WHERE g.nomeGusto = '<nomeGusto>'
                         GROUP BY g.nomeGusto;
                         """;
+
+        public static final String VISUALIZZA_ALLGUSTI =
+        """
+        SELECT nomeGusto
+        FROM GUSTI
+        WHERE disponibilita = 'Si' OR disponibilita IS NULL;
+        """;
 }

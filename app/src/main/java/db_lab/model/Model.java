@@ -1,5 +1,6 @@
 package db_lab.model;
 
+import db_lab.data.Gusti;
 import db_lab.data.Prodotti;
 import db_lab.data.Product;
 import db_lab.data.ProductPreview;
@@ -30,6 +31,8 @@ public interface Model {
     public String calculateRicavoMensile();
 
     public List<Turni> listTurniDipendente(String dipendente);
+
+    public List<String> listAllGusti();
 
     // Create a model that connects to a database using the given connection.
     //

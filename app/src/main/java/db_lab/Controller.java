@@ -67,7 +67,8 @@ public final class Controller {
     }
 
     public void createDoseGusto(String dipendente){
-
+        var gusti = this.model.listAllGusti();
+        this.view.creaNuovaDoseGusto(gusti);
     }
 
     public void createCliente(String dipendente){

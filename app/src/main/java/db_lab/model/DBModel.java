@@ -3,6 +3,7 @@ package db_lab.model;
 import db_lab.data.Composizioni;
 import db_lab.data.Dipendenti;
 import db_lab.data.DosiGusto;
+import db_lab.data.Gusti;
 import db_lab.data.Ordini;
 import db_lab.data.Partecipazioni;
 import db_lab.data.Prodotti;
@@ -85,5 +86,10 @@ public final class DBModel implements Model {
     @Override
     public List<Turni> listTurniDipendente(String dipendente) {
         return Partecipazioni.DAO.listTurniDipendente(connection, dipendente);
+    }
+
+    @Override
+    public List<String> listAllGusti() {
+        return Gusti.DAO.listAllGusti(connection);
     }
 }

@@ -160,13 +160,17 @@ public final class View {
     }
 
     //NUOVA DOSE GUSTO
-    /*
-    public void creaNuovaDoseGusto(Container cp, List<Gusti> allGusti){
-        allGusti.forEach(gusto -> {
-            var label = "- " + gusto.nomeGusto + " [" + tags + "]";
-            cp.add(clickableLabel(label, () -> this.getController().userClickedPreview(preview)));
+    
+    public void creaNuovaDoseGusto(List<String> allGusti){
+        freshPane( cp -> { 
+            allGusti.forEach(gusto -> {
+                var label = " [ " + gusto + " ] ";
+                cp.add(clickableLabel(label, () -> this.getController().userRequestedInitialPage()));
+                // cp.add(clickableLabel(label, () ->
+                // this.getController().userClickedPreview(gusto)));
+            });
         });
-    }*/
+    }
 
 
     //FUNZIONI AGGREGATE
