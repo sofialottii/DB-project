@@ -109,7 +109,6 @@ public final class Clienti {
             {
             throw new DAOException(e);
             }
-
         }
 
         public static boolean verificaSePuoiCancellareCliente(Connection connection, String clienteCF) {

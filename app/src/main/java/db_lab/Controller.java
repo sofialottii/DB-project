@@ -51,6 +51,17 @@ public final class Controller {
         this.model.cambiaImportoTotale(dipendente, data, orario, importoTotale);
     }
 
+    public boolean associaOrdineACliente(String clienteCF){
+        boolean esiste = this.model.verificaSePuoiCancellareCliente(clienteCF); //se è true il cliente esiste e non è disiscritto
+        if (esiste){
+
+            
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public void showTurni(String dipendente) {
         var turni = this.model.listTurniDipendente(dipendente);
         this.view.turniDipendentePage(turni, dipendente);

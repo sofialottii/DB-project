@@ -259,25 +259,8 @@ public final class View {
         });
     }
 
-    /* creazione nuova dose gusto */
+    /* creazione nuovo ordine */
     
-    public void scegliGustoPerDose(String dipendente, List<String> allGusti){
-        freshPane( cp -> {
-            cp.setLayout(new GridLayout(0, 2, 10, 10)); // GridLayout con due colonne e spaziatura
-
-            allGusti.forEach(gusto -> {
-                var label = " [ " + gusto + " ] ";
-                cp.add(clickableLabel(label, () -> this.creaDoseGusto(dipendente, gusto)));
-            });
-            JButton goBackButton = button("Go Back", () -> this.privateArea(dipendente));
-            cp.add(goBackButton);
-
-            cp.add(Box.createGlue());
-
-            ((JComponent) cp).setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Margini esterni
-        });
-    }
-
     public void scegliProdotto(String dipendente, List<Prodotti> allProdotti){
         freshPane( cp -> {
             cp.setLayout(new GridLayout(0, 2, 10, 10)); // GridLayout con due colonne e spaziatura
@@ -321,12 +304,70 @@ public final class View {
 
             JButton ordineConTessera = button("Crea ordine CON Tessera", () -> {
                 List<Integer> quantita = new ArrayList<>();
+                this.inserisciDatiTessera();
                 //////listaQuantita.forEach(q -> quantita.add(Integer.valueOf(q.getText())));
                 //funzione che prende il dipendente e le quantità dei prodottti scelti (nell'array gli indici sono in ordine come i prodotti)
                 //this.privateArea(dipendente);
                 //deve portarmi in una pagina dove posso aggiungere la tessera
             });
             cp.add(ordineConTessera);
+
+            cp.add(Box.createGlue());
+
+            ((JComponent) cp).setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Margini esterni
+        });
+    }
+
+    private void inserisciDatiTessera(String dipendente){
+        freshPane( cp -> {
+
+            JLabel cfLabel = new JLabel("codice fiscale cliente", SwingConstants.CENTER);
+            cp.add(cfLabel);
+            final JTextField clienteCF = new JTextField("", SwingConstants.CENTER);
+            cp.add(clienteCF);
+            cp.add(new JLabel(" "));
+
+            cp.add(button("Crea Ordine", () -> {
+                if (!this.getController().associaOrdineACliente(clienteCF.getText())) {
+                    showErrorLabel(cp, cfLabel, "Dati non validi", "codice fiscale cliente");
+                } else {
+                    //creazione dell'ordine compreso di tessera
+                    //this.getController().associaOrdineACliente(dipendente, gusto, Float.valueOf(quantita.getText()));
+                    this.privateArea(dipendente);
+                }
+            }));
+            
+            
+            /*cp.add(button("Crea Ordine", () -> {
+                if (clienteCF.getText().isEmpty()) {
+                    showErrorLabel(cp, cfLabel, "Dati non validi", "codice fiscale cliente");
+                } else {
+                    this.getController().associaOrdineACliente(dipendente, gusto, Float.valueOf(quantita.getText()));
+                    this.privateArea(dipendente);
+                }
+            }));*/
+
+
+            JButton goBackButton = button("Go Back", () -> this.privateArea(dipendente));
+            cp.add(goBackButton);
+
+            ((JComponent) cp).setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Margini esterni
+        });
+    }
+
+
+    /*creazione dosi gusto */
+
+    public void scegliGustoPerDose(String dipendente, List<String> allGusti) {
+        freshPane(cp -> {
+            cp.setLayout(new GridLayout(0, 2, 10, 10)); // GridLayout con due colonne e spaziatura
+
+            allGusti.forEach(gusto -> {
+                var label = " [ " + gusto + " ] ";
+                cp.add(clickableLabel(label, () -> this.creaDoseGusto(dipendente, gusto)));
+            });
+            JButton goBackButton = button("Go Back", () -> this.privateArea(dipendente));
+            cp.add(goBackButton);
 
             cp.add(Box.createGlue());
 
