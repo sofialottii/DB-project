@@ -47,6 +47,8 @@ public interface Model {
 
     public void cancellaCliente(String clienteCF);
 
+    public List<Prodotti> listAllProdotti();
+
     // Create a model that connects to a database using the given connection.
     //
     public static Model fromConnection(Connection connection) {
