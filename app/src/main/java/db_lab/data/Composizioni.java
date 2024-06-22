@@ -1,15 +1,10 @@
 package db_lab.data;
 
 import java.sql.Connection;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 public final class Composizioni {
     public final String CF;
