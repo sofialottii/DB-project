@@ -49,6 +49,8 @@ public interface Model {
 
     public List<Prodotti> listAllProdotti();
 
+    public void nuovoOrdineSenzaTessera(String dipendente, List<Integer> quantitaPerProdotto);
+
     // Create a model that connects to a database using the given connection.
     //
     public static Model fromConnection(Connection connection) {

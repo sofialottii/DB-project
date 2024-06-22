@@ -296,13 +296,20 @@ public final class View {
             JButton goBackButton = button("Go Back", () -> this.privateArea(dipendente));
             cp.add(goBackButton);
             JButton ordineSenzaTessera = button("Crea ordine SENZA Tessera", () -> {
-                List<Integer> quantita = new ArrayList<>();
-                listaQuantita.forEach(q -> quantita.add(Integer.valueOf(q.getText())));
+                List<Integer> quantitaPerProdotto = new ArrayList<>();
+                listaQuantita.forEach(q -> quantitaPerProdotto.add(Integer.valueOf(q.getText())));
                 //funzione che prende il dipendente e le quantità dei prodottti scelti (nell'array gli indici sono in ordine come i prodotti)
+                this.getController().createOrdineSenzaTessera(dipendente, quantitaPerProdotto);
                 this.privateArea(dipendente);
             });
             cp.add(ordineSenzaTessera);
-            JButton ordineConTessera = button("Crea ordine CON Tessera", () -> this.privateArea(dipendente));
+            JButton ordineConTessera = button("Crea ordine CON Tessera", () -> {
+                List<Integer> quantita = new ArrayList<>();
+                listaQuantita.forEach(q -> quantita.add(Integer.valueOf(q.getText())));
+                //funzione che prende il dipendente e le quantità dei prodottti scelti (nell'array gli indici sono in ordine come i prodotti)
+                //this.privateArea(dipendente);
+                //deve portarmi in una pagina dove posso aggiungere la tessera
+            });
             cp.add(ordineConTessera);
 
             cp.add(Box.createGlue());

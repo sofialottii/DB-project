@@ -129,4 +129,10 @@ public final class DBModel implements Model {
     public List<Prodotti> listAllProdotti() {
         return Prodotti.DAO.listAllProdotti(connection);
     }
+
+    @Override
+    public void nuovoOrdineSenzaTessera(String dipendente, List<Integer> quantitaPerProdotto) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'nuovoOrdineSenzaTessera'");
+    }
 }

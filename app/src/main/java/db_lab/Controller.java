@@ -4,6 +4,7 @@ import db_lab.data.DAOException;
 import db_lab.data.ProductPreview;
 import db_lab.model.Model;
 import java.util.Objects;
+import java.util.List;
 
 public final class Controller {
 
@@ -36,6 +37,10 @@ public final class Controller {
     public void createOrdine(String dipendente){
         var prodotti = this.model.listAllProdotti();
         this.view.scegliProdotto(dipendente, prodotti);
+    }
+
+    public void createOrdineSenzaTessera(String dipendente, List<Integer> quantitaPerProdotto) {
+        this.model.nuovoOrdineSenzaTessera(dipendente, quantitaPerProdotto);
     }
 
     public void showTurni(String dipendente) {
