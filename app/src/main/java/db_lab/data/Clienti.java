@@ -70,43 +70,42 @@ public final class Clienti {
     }
 
     public final class DAO {
-        public static void registraCliente(Connection connection, String dipendenteCF, String clienteCF, String nomeCliente,
-        String cognomeCliente, String dataNascita, String email) {
-            
-            try (
-                    
-                    var statement = email.isEmpty() ?
-                        DAOUtils.prepare(connection, Queries.CREA_CLIENTE, clienteCF, nomeCliente, cognomeCliente,
-                        dataNascita, null, dipendenteCF) :
-                        DAOUtils.prepare(connection, Queries.CREA_CLIENTE, clienteCF, nomeCliente, cognomeCliente,
-                        dataNascita, email, dipendenteCF);
-                    
-                    var statement2 = DAOUtils.prepare(connection, Queries.CREA_PRIMA_TESSERA, clienteCF);
-                    ) {
-                    statement.executeUpdate();
-                    statement2.executeUpdate();
+        public static void registraCliente(Connection connection, String dipendenteCF, String clienteCF,
+                String nomeCliente,
+                String cognomeCliente, String dataNascita, String email) {
 
-                    statement.close();
-                    statement2.close();
-                
+            try (
+
+                    var statement = email.isEmpty()
+                            ? DAOUtils.prepare(connection, Queries.CREA_CLIENTE, clienteCF, nomeCliente, cognomeCliente,
+                                    dataNascita, null, dipendenteCF)
+                            : DAOUtils.prepare(connection, Queries.CREA_CLIENTE, clienteCF, nomeCliente, cognomeCliente,
+                                    dataNascita, email, dipendenteCF);
+
+                    var statement2 = DAOUtils.prepare(connection, Queries.CREA_PRIMA_TESSERA, clienteCF);) {
+                statement.executeUpdate();
+                statement2.executeUpdate();
+
+                statement.close();
+                statement2.close();
+
             } catch (Exception e) {
                 throw new DAOException(e);
             }
         }
 
-        public static boolean clientePresente(Connection connection, String clienteCF){
+        public static boolean clientePresente(Connection connection, String clienteCF) {
             try (
-                var statement = DAOUtils.prepare(connection, Queries.VISUALIZZA_ESISTENZA_CLIENTE, clienteCF);
-                var resultSet = statement.executeQuery();
-            ) { if (resultSet.next()) {
-                    var count = resultSet.getInt(1); //usa l'indice della colonna
+                    var statement = DAOUtils.prepare(connection, Queries.VISUALIZZA_ESISTENZA_CLIENTE, clienteCF);
+                    var resultSet = statement.executeQuery();) {
+                if (resultSet.next()) {
+                    var count = resultSet.getInt(1); // usa l'indice della colonna
                     return count == 1;
                 } else {
                     return false;
                 }
-            }catch( Exception e)
-            {
-            throw new DAOException(e);
+            } catch (Exception e) {
+                throw new DAOException(e);
             }
         }
 
@@ -115,7 +114,7 @@ public final class Clienti {
                     var statement = DAOUtils.prepare(connection, Queries.VISUALIZZA_DETERMINATO_CLIENTE, clienteCF);
                     var resultSet = statement.executeQuery();) {
                 if (resultSet.next()) {
-                    var count = resultSet.getInt(1); //usa l'indice della colonna
+                    var count = resultSet.getInt(1); // usa l'indice della colonna
                     return count == 1;
                 } else {
                     return false;
@@ -125,10 +124,9 @@ public final class Clienti {
             }
         }
 
-        public static void cancellaCliente(Connection connection, String clienteCF){
+        public static void cancellaCliente(Connection connection, String clienteCF) {
             try (
-                    var statement = DAOUtils.prepare(connection, Queries.DISISCRIVI_CLIENTE, clienteCF);
-            ) {
+                    var statement = DAOUtils.prepare(connection, Queries.DISISCRIVI_CLIENTE, clienteCF);) {
                 statement.executeUpdate();
                 statement.close();
 

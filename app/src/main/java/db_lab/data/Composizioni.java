@@ -57,13 +57,11 @@ public final class Composizioni {
     }
 
     public final class DAO {
-        public static final Map<String,Integer> listProdottiPopolari(Connection connection) {
+        public static final Map<String, Integer> listProdottiPopolari(Connection connection) {
             try (
-                var statement = connection.prepareStatement(Queries.PRODOTTO_POPOLARE); //uso prepareStatement e non il metodo di Utility prepare
-                var resultSet = statement.executeQuery();                           //perchè non ho dei parametri nella query
-                
-            ) {
-                var prodottiPopolari = new HashMap<String,Integer>();
+                    var statement = connection.prepareStatement(Queries.PRODOTTO_POPOLARE);
+                    var resultSet = statement.executeQuery();) {
+                var prodottiPopolari = new HashMap<String, Integer>();
                 while (resultSet.next()) {
                     var codProdotto = resultSet.getString("p.codProdotto");
                     var tipoProdotto = resultSet.getString("p.tipoProdotto");
@@ -71,32 +69,29 @@ public final class Composizioni {
                     var numeroGusti = resultSet.getInt("p.numeroGusti");
                     var pesoVaschetta = resultSet.getFloat("p.pesoVaschetta");
                     var totaleQuantita = resultSet.getInt("totaleQuantita");
-                    
-                    String stringa = codProdotto+" "+tipoProdotto;
-                    stringa = tipoProdotto.equals("Gelato") ? stringa+" "+tipoGelato+", "+numeroGusti+" gusti" : 
-                        stringa+" "+pesoVaschetta+" grammi";
-                    
-                    //var prodotto = new Prodotti(codProdotto, tipoProdotto, tipoGelato, Optional.of(numeroGusti), Optional.empty(), Optional.of(pesoVaschetta), Optional.empty());
-                    
-                    prodottiPopolari.put(stringa,totaleQuantita);
+
+                    String stringa = codProdotto + " " + tipoProdotto;
+                    stringa = tipoProdotto.equals("Gelato") ? stringa + " " + tipoGelato + ", " + numeroGusti + " gusti"
+                            : stringa + " " + pesoVaschetta + " grammi";
+
+                    prodottiPopolari.put(stringa, totaleQuantita);
                 }
                 return prodottiPopolari;
-            } catch(Exception e) {
+            } catch (Exception e) {
                 throw new DAOException(e);
             }
-        
+
         }
 
         public static void nuovaComposizione(Connection connection, String dipendenteCF, String data,
-        String orario,String codProdotto, Integer quantita) {
-            
+                String orario, String codProdotto, Integer quantita) {
+
             try (
-                    var statement = DAOUtils.prepare(connection, Queries.NUOVA_COMPOSIZIONE, dipendenteCF, 
-                        data, orario, codProdotto, quantita);
-                    ) {
-                    statement.executeUpdate();
-                    statement.close();
-                
+                    var statement = DAOUtils.prepare(connection, Queries.NUOVA_COMPOSIZIONE, dipendenteCF,
+                            data, orario, codProdotto, quantita);) {
+                statement.executeUpdate();
+                statement.close();
+
             } catch (Exception e) {
                 throw new DAOException(e);
             }

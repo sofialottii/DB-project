@@ -42,6 +42,5 @@ public final class Costituzioni {
     }
 
     public final class DAO {
-        // Metodi DAO per l'interazione con il database possono essere definiti qui
     }
 }
