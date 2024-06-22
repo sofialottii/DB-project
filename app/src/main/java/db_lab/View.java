@@ -33,6 +33,7 @@ import java.util.stream.Collectors;
 import javax.swing.*;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.ArrayList;
 
 public final class View {
 
@@ -279,10 +280,12 @@ public final class View {
     public void scegliProdotto(String dipendente, List<Prodotti> allProdotti){
         freshPane( cp -> {
             cp.setLayout(new GridLayout(0, 2, 10, 10)); // GridLayout con due colonne e spaziatura
+            var listaQuantita = new ArrayList<JTextField>();
             allProdotti.forEach(prodotto -> {
                 var label = " [ " + prodotto + " ] ";
                 var quantita = new JTextField("0", SwingConstants.CENTER);
                 quantita.setEditable(false);
+                listaQuantita.add(quantita);
                 cp.add(clickableLabel(label, () -> {
                     //this.creaDoseGusto(dipendente, prodotto);
                     var i = Integer.valueOf(quantita.getText()) + 1;
@@ -292,6 +295,15 @@ public final class View {
             });
             JButton goBackButton = button("Go Back", () -> this.privateArea(dipendente));
             cp.add(goBackButton);
+            JButton ordineSenzaTessera = button("Crea ordine SENZA Tessera", () -> {
+                List<Integer> quantita = new ArrayList<>();
+                listaQuantita.forEach(q -> quantita.add(Integer.valueOf(q.getText())));
+                //funzione che prende il dipendente e le quantità dei prodottti scelti (nell'array gli indici sono in ordine come i prodotti)
+                this.privateArea(dipendente);
+            });
+            cp.add(ordineSenzaTessera);
+            JButton ordineConTessera = button("Crea ordine CON Tessera", () -> this.privateArea(dipendente));
+            cp.add(ordineConTessera);
 
             cp.add(Box.createGlue());
 
