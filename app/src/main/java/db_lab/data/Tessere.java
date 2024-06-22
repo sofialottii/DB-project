@@ -1,5 +1,6 @@
 package db_lab.data;
 
+import java.sql.Connection;
 import java.util.List;
 import java.util.Objects;
 
@@ -49,7 +50,33 @@ public final class Tessere {
     }
 
     public final class DAO {
+        public static float trovaUltimaTesseraCliente(Connection connection, String clienteCF) {
+            try (
+                    var statement = DAOUtils.prepare(connection, Queries.TROVA_ULTIMA_TESSERA, clienteCF);
+                    var resultSet = statement.executeQuery();) {
+                if (resultSet.next()) {
+                    return resultSet.getFloat("numeroTesseraMax");
+                } else {
+                    return 0;
+                }
+            } catch (Exception e) {
+                throw new DAOException(e);
+            }
+        }
 
+        public static float trovaNumeroAcquistiTessera(Connection connection, float nTessera) {
+            try (
+                    var statement = DAOUtils.prepare(connection, Queries.TROVA_NUMERO_ACQUISTI_TESSERA, nTessera);
+                    var resultSet = statement.executeQuery();) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("numeroAcquisti");
+                } else {
+                    return -1;
+                }
+            } catch (Exception e) {
+                throw new DAOException(e);
+            }
+        }
     }
 
 }

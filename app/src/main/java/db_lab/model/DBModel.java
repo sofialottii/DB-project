@@ -10,6 +10,7 @@ import db_lab.data.Partecipazioni;
 import db_lab.data.Prodotti;
 import db_lab.data.Product;
 import db_lab.data.ProductPreview;
+import db_lab.data.Tessere;
 import db_lab.data.Turni;
 
 import java.sql.Connection;
@@ -143,6 +144,19 @@ public final class DBModel implements Model {
     @Override
     public void cambiaImportoTotale(String dipendente, String data, String orario, Float importoTotale) {
         Ordini.DAO.cambiaImportoTotale(connection, dipendente, data, orario, importoTotale);
+    }
+
+    @Override
+    public float trovaUltimaTesseraCliente(String cliente) {
+        float nTessera = Tessere.DAO.trovaUltimaTesseraCliente(connection, cliente);
+
+        var nAcquisti = Tessere.DAO.trovaNumeroAcquistiTessera(connection, nTessera);
+
+        if (nAcquisti >= 7){
+            //creare nuova tessera da associare a cliente, con numero di tessera = nTessera++
+        }
+
+        return nTessera;
     }
 
 }

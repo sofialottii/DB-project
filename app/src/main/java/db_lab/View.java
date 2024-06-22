@@ -304,7 +304,7 @@ public final class View {
 
             JButton ordineConTessera = button("Crea ordine CON Tessera", () -> {
                 List<Integer> quantita = new ArrayList<>();
-                this.inserisciDatiTessera();
+                this.inserisciDatiTessera(dipendente);
                 //////listaQuantita.forEach(q -> quantita.add(Integer.valueOf(q.getText())));
                 //funzione che prende il dipendente e le quantità dei prodottti scelti (nell'array gli indici sono in ordine come i prodotti)
                 //this.privateArea(dipendente);
@@ -328,7 +328,7 @@ public final class View {
             cp.add(new JLabel(" "));
 
             cp.add(button("Crea Ordine", () -> {
-                if (!this.getController().associaOrdineACliente(clienteCF.getText())) {
+                if (this.getController().associaOrdineACliente(clienteCF.getText()) == 0) {
                     showErrorLabel(cp, cfLabel, "Dati non validi", "codice fiscale cliente");
                 } else {
                     //creazione dell'ordine compreso di tessera

@@ -51,14 +51,15 @@ public final class Controller {
         this.model.cambiaImportoTotale(dipendente, data, orario, importoTotale);
     }
 
-    public boolean associaOrdineACliente(String clienteCF){
+    public float associaOrdineACliente(String clienteCF){
         boolean esiste = this.model.verificaSePuoiCancellareCliente(clienteCF); //se è true il cliente esiste e non è disiscritto
         if (esiste){
-
+            var nTessera = this.model.trovaUltimaTesseraCliente(clienteCF);
             
-            return true;
+            
+            return nTessera;
         } else {
-            return false;
+            return 0; //sarebbe il "falso"
         }
     }
 

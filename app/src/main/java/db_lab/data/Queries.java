@@ -198,6 +198,20 @@ public final class Queries {
         WHERE CF = ? AND data = ? AND orario = ?;       
         """;
 
+        public static final String TROVA_ULTIMA_TESSERA =
+        """
+        SELECT MAX(numeroTessera) AS numeroTesseraMax
+        FROM TESSERE
+        WHERE CF = ?;
+        """;
+
+        public static final String TROVA_NUMERO_ACQUISTI_TESSERA =
+        """
+        SELECT numeroAcquisti
+        FROM TESSERE
+        WHERE numeroTessera = ?;        
+        """;
+        
         
 
 }

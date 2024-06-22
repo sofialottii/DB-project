@@ -55,6 +55,8 @@ public interface Model {
 
     public void cambiaImportoTotale(String dipendente, String data, String orario, Float importoTotale);
 
+    public float trovaUltimaTesseraCliente(String cliente);
+
     // Create a model that connects to a database using the given connection.
     //
     public static Model fromConnection(Connection connection) {
