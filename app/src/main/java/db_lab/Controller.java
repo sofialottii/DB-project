@@ -33,10 +33,9 @@ public final class Controller {
 
     
 
-    public void createOrdini(String dipendente){
-        /*deve visualizzare una pagina per poter creare l'ordine, in quella pagina poi verrà 
-         * presa la query dal model
-         */
+    public void createOrdine(String dipendente){
+        var prodotti = this.model.listAllProdotti();
+        this.view.scegliProdotto(dipendente, prodotti);
     }
 
     public void showTurni(String dipendente) {

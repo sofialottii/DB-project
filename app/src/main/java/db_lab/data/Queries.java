@@ -172,4 +172,10 @@ public final class Queries {
         SET dataDisiscrizione = CURDATE()
         WHERE CF = ?;
         """;
+
+        public static final String VISUALIZZA_ALLPRODOTTI =
+        """
+        SELECT *
+        FROM PRODOTTI;
+        """;
 }

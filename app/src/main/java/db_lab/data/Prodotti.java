@@ -1,8 +1,10 @@
 package db_lab.data;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
+import java.sql.Connection;
 
 public final class Prodotti {
 
@@ -50,7 +52,7 @@ public final class Prodotti {
                 this.pesoVaschetta, this.prezzoVaschetta);
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return Printer.stringify(
                 "Prodotti",
@@ -62,10 +64,45 @@ public final class Prodotti {
                         Printer.field("prezzoGelato", this.prezzoGelato),
                         Printer.field("pesoVaschetta", this.pesoVaschetta),
                         Printer.field("prezzoVaschetta", this.prezzoVaschetta)));
+    }*/
+
+    @Override
+    public String toString() {
+        String str = this.codProdotto +": "+ this.tipoProdotto + " ";
+        if(this.tipoGelato.equals("")) {
+            str = str +" "+ this.pesoVaschetta.get() +" gr, "+ this.prezzoVaschetta.get() + " euro";
+        } else {
+            str = str +" "+ this.tipoGelato +" "+ this.numeroGusti.get() +" gusti, "+ this.prezzoGelato.get() + " euro";
+        }
+        return str;
     }
 
     public final class DAO {
-        
+        public static List<Prodotti> listAllProdotti(Connection connection) {
+            try (
+                    var statement = connection.prepareStatement(Queries.VISUALIZZA_ALLPRODOTTI); //uso prepareStatement e non il metodo di Utility prepare
+                var resultSet = statement.executeQuery();                           //perchè non ho dei parametri nella query
+            )
+            {
+                List<Prodotti> prodotti = new ArrayList<>();
+                while (resultSet.next()) {
+                    var codProdotto = resultSet.getString("codProdotto");
+                    var tipoProdotto = resultSet.getString("tipoProdotto");
+                    var tipoGelato = resultSet.getString("tipoGelato");
+                    var numeroGusti = Optional.ofNullable(resultSet.getInt("numeroGusti"));
+                    var prezzoGelato = Optional.ofNullable(resultSet.getFloat("prezzoGelato"));
+                    var pesoVaschetta = Optional.ofNullable(resultSet.getFloat("pesoVaschetta"));
+                    var prezzoVaschetta = Optional.ofNullable(resultSet.getFloat("prezzoVaschetta"));
+                    Prodotti prodotto = new Prodotti(codProdotto, tipoProdotto, tipoGelato, 
+                        numeroGusti, prezzoGelato, pesoVaschetta, prezzoVaschetta);
+                    prodotti.add(prodotto);
+                }
+                return prodotti;
+
+            } catch (Exception e) {
+                throw new DAOException(e);
+            }
+        }
     }
 
 }

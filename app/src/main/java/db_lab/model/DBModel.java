@@ -124,4 +124,9 @@ public final class DBModel implements Model {
     public boolean clientePresente(String clienteCF) {
         return Clienti.DAO.clientePresente(connection, clienteCF);
     }
+
+    @Override
+    public List<Prodotti> listAllProdotti() {
+        return Prodotti.DAO.listAllProdotti(connection);
+    }
 }

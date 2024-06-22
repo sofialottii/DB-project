@@ -216,7 +216,7 @@ public final class View {
             cp.setLayout(new GridLayout(0, 1, 10, 10)); // GridLayout con una sola colonna e spaziatura di 10 pixel
 
             cp.add(new JLabel("Benvenuto "+dipendente, SwingConstants.CENTER));
-            cp.add(button("Crea Ordini", () -> this.getController().createOrdini(dipendente)));
+            cp.add(button("Crea Ordini", () -> this.getController().createOrdine(dipendente)));
             cp.add(button("Visualizza i miei turni", () -> this.getController().showTurni(dipendente)));
             cp.add(button("Crea nuova dose gusto", () -> this.getController().createDoseGusto(dipendente)));
             cp.add(button("Iscrivi cliente", () -> this.createClientePage(dipendente)));
@@ -266,6 +266,29 @@ public final class View {
             allGusti.forEach(gusto -> {
                 var label = " [ " + gusto + " ] ";
                 cp.add(clickableLabel(label, () -> this.creaDoseGusto(dipendente, gusto)));
+            });
+            JButton goBackButton = button("Go Back", () -> this.privateArea(dipendente));
+            cp.add(goBackButton);
+
+            cp.add(Box.createGlue());
+
+            ((JComponent) cp).setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Margini esterni
+        });
+    }
+
+    public void scegliProdotto(String dipendente, List<Prodotti> allProdotti){
+        freshPane( cp -> {
+            cp.setLayout(new GridLayout(0, 2, 10, 10)); // GridLayout con due colonne e spaziatura
+            allProdotti.forEach(prodotto -> {
+                var label = " [ " + prodotto + " ] ";
+                var quantita = new JTextField("0", SwingConstants.CENTER);
+                quantita.setEditable(false);
+                cp.add(clickableLabel(label, () -> {
+                    //this.creaDoseGusto(dipendente, prodotto);
+                    var i = Integer.valueOf(quantita.getText()) + 1;
+                    quantita.setText(String.valueOf(i));
+                }));
+                cp.add(quantita);
             });
             JButton goBackButton = button("Go Back", () -> this.privateArea(dipendente));
             cp.add(goBackButton);
