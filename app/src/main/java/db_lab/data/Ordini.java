@@ -6,6 +6,9 @@ import java.util.Optional;
 import java.util.Map;
 import java.util.HashMap;
 import java.sql.Connection;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public final class Ordini {
 
@@ -103,6 +106,25 @@ public final class Ordini {
                 throw new DAOException(e);
             }
         
+        }
+
+        public static List<String> nuovoOrdineSenzaTessera(Connection connection, String dipendenteCF) {
+            LocalDate currentDate = LocalDate.now();
+            String formattedDate = currentDate.toString(); // Già nel formato aaaa-mm-gg
+            LocalTime currentTime = LocalTime.now();
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+            String formattedTime = currentTime.format(timeFormatter); 
+            try (
+                    var statement = DAOUtils.prepare(connection, Queries.NUOVO_ORDINE_SENZA_TESSERA, dipendenteCF, 
+                        formattedDate, formattedTime);
+                    ) {
+                    statement.executeUpdate();
+                    statement.close();
+                    return List.of(formattedDate, formattedTime);
+                
+            } catch (Exception e) {
+                throw new DAOException(e);
+            }
         }
     }
 

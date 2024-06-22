@@ -296,10 +296,12 @@ public final class View {
             JButton goBackButton = button("Go Back", () -> this.privateArea(dipendente));
             cp.add(goBackButton);
             JButton ordineSenzaTessera = button("Crea ordine SENZA Tessera", () -> {
-                List<Integer> quantitaPerProdotto = new ArrayList<>();
-                listaQuantita.forEach(q -> quantitaPerProdotto.add(Integer.valueOf(q.getText())));
                 //funzione che prende il dipendente e le quantità dei prodottti scelti (nell'array gli indici sono in ordine come i prodotti)
-                this.getController().createOrdineSenzaTessera(dipendente, quantitaPerProdotto);
+                var codOrdine = this.getController().createOrdineSenzaTessera(dipendente);
+                listaQuantita.forEach(q -> {
+                    //quantitaPerProdotto.add(Integer.valueOf(q.getText()));
+                    //richiamare il metodo per creare la composizione
+                });
                 this.privateArea(dipendente);
             });
             cp.add(ordineSenzaTessera);

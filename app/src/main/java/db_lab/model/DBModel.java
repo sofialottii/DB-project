@@ -131,8 +131,8 @@ public final class DBModel implements Model {
     }
 
     @Override
-    public void nuovoOrdineSenzaTessera(String dipendente, List<Integer> quantitaPerProdotto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'nuovoOrdineSenzaTessera'");
+    public List<String> nuovoOrdineSenzaTessera(String dipendente) {
+        return Ordini.DAO.nuovoOrdineSenzaTessera(connection, dipendente);
     }
+
 }

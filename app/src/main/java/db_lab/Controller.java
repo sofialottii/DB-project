@@ -39,8 +39,8 @@ public final class Controller {
         this.view.scegliProdotto(dipendente, prodotti);
     }
 
-    public void createOrdineSenzaTessera(String dipendente, List<Integer> quantitaPerProdotto) {
-        this.model.nuovoOrdineSenzaTessera(dipendente, quantitaPerProdotto);
+    public List<String> createOrdineSenzaTessera(String dipendente) {
+        return this.model.nuovoOrdineSenzaTessera(dipendente);
     }
 
     public void showTurni(String dipendente) {

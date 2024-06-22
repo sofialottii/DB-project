@@ -132,6 +132,7 @@ public final class Clienti {
                     var statement = DAOUtils.prepare(connection, Queries.DISISCRIVI_CLIENTE, clienteCF);
             ) {
                 statement.executeUpdate();
+                statement.close();
 
             } catch (Exception e) {
                 throw new DAOException(e);

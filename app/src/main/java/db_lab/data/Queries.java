@@ -178,4 +178,13 @@ public final class Queries {
         SELECT *
         FROM PRODOTTI;
         """;
+
+        public static final String NUOVO_ORDINE_SENZA_TESSERA =
+        """
+        INSERT INTO ORDINI (CF, data, orario, importoTotale, Con_CF, Con_numeroTessera)
+        VALUES (?, ?, ?, 0, null, null);
+        """;
+
+        
+
 }
