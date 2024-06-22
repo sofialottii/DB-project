@@ -1,7 +1,6 @@
 package db_lab.data;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Objects;
 

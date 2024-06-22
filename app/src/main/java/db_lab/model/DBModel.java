@@ -8,8 +8,6 @@ import db_lab.data.Gusti;
 import db_lab.data.Ordini;
 import db_lab.data.Partecipazioni;
 import db_lab.data.Prodotti;
-import db_lab.data.Product;
-import db_lab.data.ProductPreview;
 import db_lab.data.Tessere;
 import db_lab.data.Turni;
 
@@ -17,7 +15,6 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 // This is the real model implementation that uses the DAOs we've defined to
 // actually load data from the underlying database.
@@ -30,34 +27,12 @@ import java.util.Optional;
 public final class DBModel implements Model {
 
     private final Connection connection;
-    private Optional<List<ProductPreview>> previews;
+    //private Optional<List<ProductPreview>> previews;
 
     public DBModel(Connection connection) {
         Objects.requireNonNull(connection, "Model created with null connection");
         this.connection = connection;
-        this.previews = Optional.empty();
-    }
-
-    @Override
-    public Optional<Product> find(int productCode) {
-        return Product.DAO.find(connection, productCode);
-    }
-
-    @Override
-    public List<ProductPreview> previews() {
-        return this.previews.orElse(List.of());
-    }
-
-    @Override
-    public boolean loadedPreviews() {
-        return this.previews.isPresent();
-    }
-
-    @Override
-    public List<ProductPreview> loadPreviews() {
-        var previews = ProductPreview.DAO.list(this.connection);
-        this.previews = Optional.of(previews);
-        return previews;
+        //this.previews = Optional.empty();
     }
 
     @Override

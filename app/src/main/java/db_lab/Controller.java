@@ -1,7 +1,6 @@
 package db_lab;
 
 import db_lab.data.DAOException;
-import db_lab.data.ProductPreview;
 import db_lab.model.Model;
 import java.util.Objects;
 import java.util.List;
@@ -130,28 +129,6 @@ public final class Controller {
     }
 
 
-
-    public void userClickedPreview(ProductPreview productPreview) {
-        try {
-            var product = this.model.find(productPreview.code);
-            if (product.isPresent()) {
-                this.view.productPage(product.get());
-            } else {
-                this.view.failedToLoadProduct(productPreview);
-            }
-        } catch (DAOException e) {
-            this.view.failedToLoadProduct(productPreview);
-        }
-    }
-
-    public void userClickedBack() {
-        if (this.model.loadedPreviews()) {
-            //this.view.previewPage(this.model.previews());
-        } else {
-            this.loadInitialPage();
-        }
-    }
-
     void loadInitialPage() {
         try {
             //this.view.previewPage(previews);
@@ -159,7 +136,6 @@ public final class Controller {
 
         } catch (DAOException e) {
             e.printStackTrace();
-            this.view.failedToLoadPreviews();
         }
     }
 }

@@ -1,9 +1,6 @@
 package db_lab;
 
-import db_lab.data.Gusti;
 import db_lab.data.Prodotti;
-import db_lab.data.Product;
-import db_lab.data.ProductPreview;
 import db_lab.data.Turni;
 
 import java.util.Timer;
@@ -11,11 +8,7 @@ import java.util.TimerTask;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -27,14 +20,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.TimerTask;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 import javax.swing.*;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.ArrayList;
 
 public final class View {
 
@@ -88,39 +76,7 @@ public final class View {
         Objects.requireNonNull(controller, "Set null controller in view");
         this.controller = Optional.of(controller);
     }
-/*Tutto ciò che è sopra va bene */
-    public void productPage(Product product) {
-        freshPane(cp -> {
-            cp.add(new JLabel(product.name));
-            cp.add(new JLabel(" "));
-            cp.add(new JLabel(product.description));
-            cp.add(new JLabel(" "));
-            product.composition
-                .entrySet()
-                .stream()
-                .sorted((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()))
-                .map(entry -> {
-                    var percent = Math.round(entry.getValue() * 100) + "%";
-                    return "- " + entry.getKey().description + " " + percent;
-                })
-                .forEach(entry -> cp.add(new JLabel(entry)));
 
-            cp.add(new JLabel(" "));
-            cp.add(button("Go back", () -> this.getController().userClickedBack()));
-        });
-    }
-
-    public void failedToLoadProduct(ProductPreview productPreview) {
-        freshPane(cp -> {
-            cp.add(new JLabel("I couldn't load the page for product", SwingConstants.CENTER));
-            cp.add(new JLabel(productPreview.name, SwingConstants.CENTER));
-            cp.add(new JLabel(" "));
-            cp.add(button("Retry", () -> this.getController().userClickedPreview(productPreview)));
-            cp.add(button("Go back", () -> this.getController().userClickedBack()));
-        });
-    }
-
-    //Buono
     public void loginPage() {
 
         freshPane(cp -> {
@@ -469,7 +425,7 @@ public final class View {
             final JTextField clienteCF = new JTextField("", SwingConstants.CENTER);
             cp.add(clienteCF);
 
-            cp.add(button("Crea",
+            cp.add(button("Disiscrivi",
                     () -> {
                         boolean x = this.getController().deleteCliente(clienteCF.getText());
                         if (x){
@@ -601,28 +557,7 @@ public final class View {
     }
 
     /* ******************************************** */
-    
-    
-    
-    private void addPreviews(Container cp, List<ProductPreview> productPreviews) {
-        productPreviews.forEach(preview -> {
-            var tags = preview.tags
-                .stream()
-                .map(tag -> tag.name)
-                .sorted((tag1, tag2) -> tag1.compareTo(tag2))
-                .collect(Collectors.joining(","));
-            var label = "- " + preview.name + " [" + tags + "]";
-            cp.add(clickableLabel(label, () -> this.getController().userClickedPreview(preview)));
-        });
-    }
 
-
-    public void failedToLoadPreviews() {
-        freshPane(cp -> {
-            cp.add(new JLabel("I couldn't load the previews", SwingConstants.CENTER));
-            //cp.add(button("Retry", () -> this.getController().userClickedReloadPreviews()));
-        });
-    }
 
     private JButton button(String label, Runnable action) {
         var button = new JButton(label);

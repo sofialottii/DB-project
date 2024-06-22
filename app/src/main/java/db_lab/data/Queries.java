@@ -1,13 +1,7 @@
 package db_lab.data;
 
 public final class Queries {
-        public static final String TAGS_FOR_PRODUCT =
-                        // query che cambia ogni volta che la eseguiamo
-                        """
-                                        select t.tag_name
-                                        from TAGGED t
-                                        where t.product_code = ?
-                                        """;
+        
 
         public static final String LIST_PRODUCTS =
                         // query statica senza parametri

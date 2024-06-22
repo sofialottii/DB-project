@@ -1,24 +1,13 @@
 package db_lab.model;
 
-import db_lab.data.Gusti;
 import db_lab.data.Prodotti;
-import db_lab.data.Product;
-import db_lab.data.ProductPreview;
 import db_lab.data.Turni;
 
 import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public interface Model {
-    public Optional<Product> find(int productCode);
-
-    public List<ProductPreview> previews();
-
-    public boolean loadedPreviews();
-
-    public List<ProductPreview> loadPreviews();
 
     public String findDipendente(String dipendenteCF, String password);
 
