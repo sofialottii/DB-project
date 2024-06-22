@@ -49,7 +49,7 @@ public interface Model {
 
     public List<Prodotti> listAllProdotti();
 
-    public List<String> nuovoOrdineSenzaTessera(String dipendente);
+    public List<String> nuovoOrdineSenzaTessera(String dipendente, String clienteCF, float nTessera);
 
     public void nuovaComposizione(String dipendente, String data, String orario, String codProdotto, Integer quantita);
 

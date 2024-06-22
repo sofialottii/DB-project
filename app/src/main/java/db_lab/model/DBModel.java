@@ -132,8 +132,8 @@ public final class DBModel implements Model {
     }
 
     @Override
-    public List<String> nuovoOrdineSenzaTessera(String dipendente) {
-        return Ordini.DAO.nuovoOrdineSenzaTessera(connection, dipendente);
+    public List<String> nuovoOrdineSenzaTessera(String dipendente, String clienteCF, float nTessera) {
+        return Ordini.DAO.nuovoOrdineSenzaTessera(connection, dipendente, clienteCF, nTessera);
     }
 
     @Override
@@ -150,11 +150,13 @@ public final class DBModel implements Model {
     public float trovaUltimaTesseraCliente(String cliente) {
         float nTessera = Tessere.DAO.trovaUltimaTesseraCliente(connection, cliente);
 
-        var nAcquisti = Tessere.DAO.trovaNumeroAcquistiTessera(connection, nTessera);
+        int nAcquisti = Tessere.DAO.trovaNumeroAcquistiTessera(connection, cliente, nTessera);
 
         if (nAcquisti >= 7){
             //creare nuova tessera da associare a cliente, con numero di tessera = nTessera++
+            Tessere.DAO.creaNuovaTessera(connection, cliente, nTessera+1);
         }
+        Tessere.DAO.aumentaNAcquisti(connection, cliente, nTessera, nAcquisti+1);
 
         return nTessera;
     }

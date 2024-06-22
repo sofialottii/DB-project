@@ -284,7 +284,7 @@ public final class View {
             cp.add(goBackButton);
             JButton ordineSenzaTessera = button("Crea ordine SENZA Tessera", () -> {
                 //funzione che prende il dipendente e le quantità dei prodottti scelti (nell'array gli indici sono in ordine come i prodotti)
-                var codOrdine = this.getController().createOrdineSenzaTessera(dipendente);
+                var codOrdine = this.getController().createOrdineSenzaTessera(dipendente, "", 0);
                 
                 float importoTotale = 0;
                 for (String codProdotto : listaQuantita.keySet()) {
@@ -303,12 +303,24 @@ public final class View {
             cp.add(ordineSenzaTessera);
 
             JButton ordineConTessera = button("Crea ordine CON Tessera", () -> {
-                List<Integer> quantita = new ArrayList<>();
-                this.inserisciDatiTessera(dipendente);
-                //////listaQuantita.forEach(q -> quantita.add(Integer.valueOf(q.getText())));
-                //funzione che prende il dipendente e le quantità dei prodottti scelti (nell'array gli indici sono in ordine come i prodotti)
-                //this.privateArea(dipendente);
-                //deve portarmi in una pagina dove posso aggiungere la tessera
+                //List<Integer> quantita = new ArrayList<>();
+                this.inserisciDatiTessera(dipendente, listaQuantita, listaPrezzi);
+                
+                /*var codOrdine = this.getController().createOrdineSenzaTessera(dipendente, "", 0);
+
+                float importoTotale = 0;
+                for (String codProdotto : listaQuantita.keySet()) {
+                    int quantita = Integer.valueOf(listaQuantita.get(codProdotto).getText());
+                    if (quantita != 0) {
+                        this.getController().createComposizione(dipendente, codOrdine.get(0), codOrdine.get(1),
+                                codProdotto, quantita);
+                    }
+                    importoTotale += quantita * listaPrezzi.get(codProdotto);
+                }
+
+                this.getController().modifyImportoTotale(dipendente, codOrdine.get(0), codOrdine.get(1), importoTotale);
+
+                this.privateArea(dipendente);*/
             });
             cp.add(ordineConTessera);
 
@@ -318,8 +330,9 @@ public final class View {
         });
     }
 
-    private void inserisciDatiTessera(String dipendente){
+    private void inserisciDatiTessera(String dipendente, Map<String, JTextField> listaQuantita, Map<String, Float> listaPrezzi){
         freshPane( cp -> {
+            cp.setLayout(new GridLayout(0, 1, 10, 10)); // GridLayout con una sola colonna e spaziatura di 10 pixel
 
             JLabel cfLabel = new JLabel("codice fiscale cliente", SwingConstants.CENTER);
             cp.add(cfLabel);
@@ -328,30 +341,36 @@ public final class View {
             cp.add(new JLabel(" "));
 
             cp.add(button("Crea Ordine", () -> {
-                if (this.getController().associaOrdineACliente(clienteCF.getText()) == 0) {
+                float nTessera = this.getController().associaOrdineACliente(clienteCF.getText());
+                if (nTessera == 0) {
                     showErrorLabel(cp, cfLabel, "Dati non validi", "codice fiscale cliente");
                 } else {
                     //creazione dell'ordine compreso di tessera
-                    //this.getController().associaOrdineACliente(dipendente, gusto, Float.valueOf(quantita.getText()));
+
+                    var codOrdine = this.getController().createOrdineSenzaTessera(dipendente, clienteCF.getText(), nTessera);
+
+                    float importoTotale = 0;
+                    for (String codProdotto : listaQuantita.keySet()) {
+                        int quantita = Integer.valueOf(listaQuantita.get(codProdotto).getText());
+                        if (quantita != 0) {
+                            this.getController().createComposizione(dipendente, codOrdine.get(0), codOrdine.get(1),
+                                    codProdotto, quantita);
+                        }
+                        importoTotale += quantita * listaPrezzi.get(codProdotto);
+                    }
+
+                    this.getController().modifyImportoTotale(dipendente, codOrdine.get(0), codOrdine.get(1),
+                            importoTotale);
+
                     this.privateArea(dipendente);
                 }
             }));
-            
-            
-            /*cp.add(button("Crea Ordine", () -> {
-                if (clienteCF.getText().isEmpty()) {
-                    showErrorLabel(cp, cfLabel, "Dati non validi", "codice fiscale cliente");
-                } else {
-                    this.getController().associaOrdineACliente(dipendente, gusto, Float.valueOf(quantita.getText()));
-                    this.privateArea(dipendente);
-                }
-            }));*/
-
 
             JButton goBackButton = button("Go Back", () -> this.privateArea(dipendente));
             cp.add(goBackButton);
 
             ((JComponent) cp).setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Margini esterni
+
         });
     }
 

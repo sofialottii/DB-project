@@ -64,15 +64,41 @@ public final class Tessere {
             }
         }
 
-        public static float trovaNumeroAcquistiTessera(Connection connection, float nTessera) {
+        public static int trovaNumeroAcquistiTessera(Connection connection, String cliente, float nTessera) {
             try (
-                    var statement = DAOUtils.prepare(connection, Queries.TROVA_NUMERO_ACQUISTI_TESSERA, nTessera);
+                    var statement = DAOUtils.prepare(connection, Queries.TROVA_NUMERO_ACQUISTI_TESSERA, cliente, nTessera);
                     var resultSet = statement.executeQuery();) {
                 if (resultSet.next()) {
                     return resultSet.getInt("numeroAcquisti");
                 } else {
                     return -1;
                 }
+            } catch (Exception e) {
+                throw new DAOException(e);
+            }
+        }
+
+        public static void aumentaNAcquisti(Connection connection, String clienteCF, float nTessera, int nAcquistiIncrementato) {
+            try (
+                var statement = DAOUtils.prepare(connection, Queries.INCREMENTA_NUMERO_ACQUISTI, nAcquistiIncrementato, clienteCF,
+                nTessera);)
+                {
+                statement.executeUpdate();
+                statement.close();
+
+            } catch (Exception e) {
+                throw new DAOException(e);
+            }
+        }
+
+        public static void creaNuovaTessera(Connection connection, String cliente, float nTessera)
+        {
+            try (
+                var statement = DAOUtils.prepare(connection, Queries.CREA_NUOVA_TESSERA, cliente, nTessera);
+                ){
+                statement.executeUpdate();
+                statement.close();
+
             } catch (Exception e) {
                 throw new DAOException(e);
             }

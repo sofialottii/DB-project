@@ -158,6 +158,12 @@ public final class Queries {
         """;
         //automatico avviene subito dopo CREA_CLIENTE
 
+        public static final String CREA_NUOVA_TESSERA =
+        """
+        INSERT INTO TESSERE (CF, numeroTessera, numeroAcquisti)
+        VALUES (?, ?, 0);
+        """;
+
         public static final String VISUALIZZA_DETERMINATO_CLIENTE =
         """
         SELECT COUNT(*)
@@ -182,7 +188,7 @@ public final class Queries {
         public static final String NUOVO_ORDINE_SENZA_TESSERA =
         """
         INSERT INTO ORDINI (CF, data, orario, importoTotale, Con_CF, Con_numeroTessera)
-        VALUES (?, ?, ?, 0, null, null);
+        VALUES (?, ?, ?, 0, ?, ?);
         """;
 
         public static final String NUOVA_COMPOSIZIONE =
@@ -209,7 +215,14 @@ public final class Queries {
         """
         SELECT numeroAcquisti
         FROM TESSERE
-        WHERE numeroTessera = ?;        
+        WHERE CF = ? AND numeroTessera = ?;        
+        """;
+
+        public static final String INCREMENTA_NUMERO_ACQUISTI =
+        """
+        UPDATE TESSERE
+        SET numeroAcquisti = ?
+        WHERE CF = ? AND numeroTessera = ?;
         """;
         
         
