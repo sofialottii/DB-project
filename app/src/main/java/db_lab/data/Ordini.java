@@ -126,6 +126,20 @@ public final class Ordini {
                 throw new DAOException(e);
             }
         }
+
+        public static void cambiaImportoTotale(Connection connection, String dipendenteCF, String data,
+        String orario, Float importoTotale) {
+            try (
+                    var statement = DAOUtils.prepare(connection, Queries.CAMBIA_IMPORTO_TOTALE, importoTotale, dipendenteCF,
+                            data, orario);) {
+
+                statement.executeUpdate();
+                statement.close();
+
+            } catch (Exception e) {
+                throw new DAOException(e);
+            }
+        }
     }
 
     

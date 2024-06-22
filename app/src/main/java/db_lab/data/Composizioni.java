@@ -1,6 +1,9 @@
 package db_lab.data;
 
 import java.sql.Connection;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -87,6 +90,21 @@ public final class Composizioni {
                 throw new DAOException(e);
             }
         
+        }
+
+        public static void nuovaComposizione(Connection connection, String dipendenteCF, String data,
+        String orario,String codProdotto, Integer quantita) {
+            
+            try (
+                    var statement = DAOUtils.prepare(connection, Queries.NUOVA_COMPOSIZIONE, dipendenteCF, 
+                        data, orario, codProdotto, quantita);
+                    ) {
+                    statement.executeUpdate();
+                    statement.close();
+                
+            } catch (Exception e) {
+                throw new DAOException(e);
+            }
         }
     }
 }

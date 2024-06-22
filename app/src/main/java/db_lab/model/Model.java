@@ -51,6 +51,10 @@ public interface Model {
 
     public List<String> nuovoOrdineSenzaTessera(String dipendente);
 
+    public void nuovaComposizione(String dipendente, String data, String orario, String codProdotto, Integer quantita);
+
+    public void cambiaImportoTotale(String dipendente, String data, String orario, Float importoTotale);
+
     // Create a model that connects to a database using the given connection.
     //
     public static Model fromConnection(Connection connection) {

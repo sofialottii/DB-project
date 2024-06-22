@@ -185,6 +185,19 @@ public final class Queries {
         VALUES (?, ?, ?, 0, null, null);
         """;
 
+        public static final String NUOVA_COMPOSIZIONE =
+        """
+        INSERT INTO COMPOSIZIONI (CF, data, orario, codProdotto, quantita)
+        VALUES (?, ?, ?, ?, ?);        
+        """;
+
+        public static final String CAMBIA_IMPORTO_TOTALE =
+        """
+        UPDATE ORDINI
+        SET importoTotale = ?
+        WHERE CF = ? AND data = ? AND orario = ?;       
+        """;
+
         
 
 }

@@ -135,4 +135,14 @@ public final class DBModel implements Model {
         return Ordini.DAO.nuovoOrdineSenzaTessera(connection, dipendente);
     }
 
+    @Override
+    public void nuovaComposizione(String dipendente, String data, String orario, String codProdotto, Integer quantita) {
+        Composizioni.DAO.nuovaComposizione(connection, dipendente, data, orario, codProdotto, quantita);
+    }
+
+    @Override
+    public void cambiaImportoTotale(String dipendente, String data, String orario, Float importoTotale) {
+        Ordini.DAO.cambiaImportoTotale(connection, dipendente, data, orario, importoTotale);
+    }
+
 }

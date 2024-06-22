@@ -43,6 +43,14 @@ public final class Controller {
         return this.model.nuovoOrdineSenzaTessera(dipendente);
     }
 
+    public void createComposizione(String dipendente, String data, String orario, String codProdotto, Integer quantita){
+        this.model.nuovaComposizione(dipendente, data, orario, codProdotto, quantita);
+    }
+
+    public void modifyImportoTotale(String dipendente, String data, String orario, Float importoTotale){
+        this.model.cambiaImportoTotale(dipendente, data, orario, importoTotale);
+    }
+
     public void showTurni(String dipendente) {
         var turni = this.model.listTurniDipendente(dipendente);
         this.view.turniDipendentePage(turni, dipendente);

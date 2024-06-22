@@ -33,6 +33,7 @@ import java.util.stream.Collectors;
 import javax.swing.*;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.ArrayList;
 
 public final class View {
@@ -280,12 +281,15 @@ public final class View {
     public void scegliProdotto(String dipendente, List<Prodotti> allProdotti){
         freshPane( cp -> {
             cp.setLayout(new GridLayout(0, 2, 10, 10)); // GridLayout con due colonne e spaziatura
-            var listaQuantita = new ArrayList<JTextField>();
+            var listaQuantita = new HashMap<String, JTextField>(); //codProdotto, quantita
+            var listaPrezzi = new HashMap<String, Float>(); //codProdotto, prezzo
             allProdotti.forEach(prodotto -> {
                 var label = " [ " + prodotto + " ] ";
                 var quantita = new JTextField("0", SwingConstants.CENTER);
                 quantita.setEditable(false);
-                listaQuantita.add(quantita);
+                listaQuantita.put(prodotto.codProdotto, quantita);
+                listaPrezzi.put(prodotto.codProdotto, prodotto.tipoProdotto.equals("Gelato") ?
+                    prodotto.prezzoGelato.get() : prodotto.prezzoVaschetta.get());
                 cp.add(clickableLabel(label, () -> {
                     //this.creaDoseGusto(dipendente, prodotto);
                     var i = Integer.valueOf(quantita.getText()) + 1;
@@ -298,16 +302,26 @@ public final class View {
             JButton ordineSenzaTessera = button("Crea ordine SENZA Tessera", () -> {
                 //funzione che prende il dipendente e le quantità dei prodottti scelti (nell'array gli indici sono in ordine come i prodotti)
                 var codOrdine = this.getController().createOrdineSenzaTessera(dipendente);
-                listaQuantita.forEach(q -> {
-                    //quantitaPerProdotto.add(Integer.valueOf(q.getText()));
-                    //richiamare il metodo per creare la composizione
-                });
+                
+                float importoTotale = 0;
+                for (String codProdotto : listaQuantita.keySet()) {
+                    int quantita = Integer.valueOf(listaQuantita.get(codProdotto).getText());
+                    if (quantita != 0) {
+                        this.getController().createComposizione(dipendente, codOrdine.get(0), codOrdine.get(1),
+                                codProdotto, quantita);
+                    }
+                    importoTotale += quantita * listaPrezzi.get(codProdotto);
+                }
+
+                this.getController().modifyImportoTotale(dipendente, codOrdine.get(0),codOrdine.get(1),importoTotale);
+                
                 this.privateArea(dipendente);
             });
             cp.add(ordineSenzaTessera);
+
             JButton ordineConTessera = button("Crea ordine CON Tessera", () -> {
                 List<Integer> quantita = new ArrayList<>();
-                listaQuantita.forEach(q -> quantita.add(Integer.valueOf(q.getText())));
+                //////listaQuantita.forEach(q -> quantita.add(Integer.valueOf(q.getText())));
                 //funzione che prende il dipendente e le quantità dei prodottti scelti (nell'array gli indici sono in ordine come i prodotti)
                 //this.privateArea(dipendente);
                 //deve portarmi in una pagina dove posso aggiungere la tessera
