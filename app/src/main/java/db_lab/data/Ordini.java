@@ -144,6 +144,26 @@ public final class Ordini {
                 throw new DAOException(e);
             }
         }
+
+        public static final Map<String,Integer> listFasceOrarie(Connection connection) {
+            try (
+                var statement = connection.prepareStatement(Queries.FASCIA_AFFOLLATA); //uso prepareStatement e non il metodo di Utility prepare
+                var resultSet = statement.executeQuery();                           //perchè non ho dei parametri nella query
+                
+            ) {
+                var fasceOrarie = new HashMap<String,Integer>();
+                while (resultSet.next()) {
+                    var fasciaOraria = resultSet.getString("fasciaOraria");
+                    var numeroOrdini= resultSet.getInt("numeroOrdini");
+                    
+                    fasceOrarie.put(fasciaOraria,numeroOrdini);
+                }
+                return fasceOrarie;
+            } catch(Exception e) {
+                throw new DAOException(e);
+            }
+        
+        }
     }
 
     

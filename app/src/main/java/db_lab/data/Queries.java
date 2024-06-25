@@ -97,18 +97,20 @@ public final class Queries {
 
         public static final String FASCIA_AFFOLLATA =
         """
-        SELECT fasciaOraria, COUNT(*) AS numeroPartecipazioni
-        FROM partecipazioni
+        SELECT fasciaOraria, COUNT(*) AS numeroOrdini
+        FROM (
+            SELECT
+                CASE
+                    WHEN TIME(orario) BETWEEN '09:00:00' AND '13:59:59' THEN '09-14'
+                    WHEN TIME(orario) BETWEEN '14:00:00' AND '18:59:59' THEN '14-19'
+                    WHEN TIME(orario) BETWEEN '19:00:00' AND '23:59:59' THEN '19-24'
+                    ELSE '00-09'
+                END AS fasciaOraria
+            FROM ORDINI
+        ) AS fasce_orarie
         GROUP BY fasciaOraria
-        HAVING COUNT(*) = (
-            SELECT MAX(numeroPartecipazioni)
-            FROM (
-                SELECT COUNT(*) AS numeroPartecipazioni
-                FROM partecipazioni
-                GROUP BY fasciaOraria
-            ) AS sottoquery
-        );
-        
+        ORDER BY numeroOrdini DESC
+        LIMIT 1;  
         """;
 
         public static final String CALORIE_TOTALI = """

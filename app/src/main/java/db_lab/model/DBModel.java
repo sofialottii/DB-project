@@ -83,7 +83,7 @@ public final class DBModel implements Model {
 
     @Override
     public Map<String, Integer> listFasceOrarie() {
-        return Partecipazioni.DAO.listFasceOrarie(connection);
+        return Ordini.DAO.listFasceOrarie(connection);
     }
 
     @Override

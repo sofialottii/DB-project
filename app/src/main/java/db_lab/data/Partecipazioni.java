@@ -72,24 +72,5 @@ public final class Partecipazioni {
             }
         }
 
-        public static final Map<String,Integer> listFasceOrarie(Connection connection) {
-            try (
-                var statement = connection.prepareStatement(Queries.FASCIA_AFFOLLATA); //uso prepareStatement e non il metodo di Utility prepare
-                var resultSet = statement.executeQuery();                           //perchè non ho dei parametri nella query
-                
-            ) {
-                var fasceOrarie = new HashMap<String,Integer>();
-                while (resultSet.next()) {
-                    var fasciaOraria = resultSet.getString("fasciaOraria");
-                    var numeroPartecipazioni= resultSet.getInt("numeroPartecipazioni");
-                    
-                    fasceOrarie.put(fasciaOraria,numeroPartecipazioni);
-                }
-                return fasceOrarie;
-            } catch(Exception e) {
-                throw new DAOException(e);
-            }
-        
-        }
     }
 }
