@@ -108,7 +108,7 @@ public final class Ordini {
         
         }
 
-        public static List<String> nuovoOrdineSenzaTessera(Connection connection, String dipendenteCF, String clienteCF, float nTessera) {
+        public static List<String> nuovoOrdine(Connection connection, String dipendenteCF, String clienteCF, float nTessera) {
             LocalDate currentDate = LocalDate.now();
             String formattedDate = currentDate.toString(); // Già nel formato aaaa-mm-gg
             LocalTime currentTime = LocalTime.now();
@@ -121,17 +121,6 @@ public final class Ordini {
                             DAOUtils.prepare(connection, Queries.NUOVO_ORDINE_SENZA_TESSERA, dipendenteCF,
                                     formattedDate, formattedTime, clienteCF, nTessera);
 
-
-                        /*
-                         * 
-                         * var statement = email.isEmpty() ?
-                         * DAOUtils.prepare(connection, Queries.CREA_CLIENTE, clienteCF, nomeCliente,
-                         * cognomeCliente,
-                         * dataNascita, null, dipendenteCF) :
-                         * DAOUtils.prepare(connection, Queries.CREA_CLIENTE, clienteCF, nomeCliente,
-                         * cognomeCliente,
-                         * dataNascita, email, dipendenteCF);
-                         */
                     ) {
                     statement.executeUpdate();
                     statement.close();

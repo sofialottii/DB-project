@@ -107,8 +107,8 @@ public final class DBModel implements Model {
     }
 
     @Override
-    public List<String> nuovoOrdineSenzaTessera(String dipendente, String clienteCF, float nTessera) {
-        return Ordini.DAO.nuovoOrdineSenzaTessera(connection, dipendente, clienteCF, nTessera);
+    public List<String> nuovoOrdine(String dipendente, String clienteCF, float nTessera) {
+        return Ordini.DAO.nuovoOrdine(connection, dipendente, clienteCF, nTessera);
     }
 
     @Override
