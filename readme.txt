@@ -1,7 +1,7 @@
 Passi necessari per l'esecuzione dell'applicativo:
 1. Copiare il testo del file PROGETTO_DATABASE_GELATERIA.ddl dentro MySQL ed eseguirlo per creare il database.
 2. Eseguire le queries del file queries_popolazioneDB.sql dentro MySQL per popolare il database appena creato.
-3. Aprire la cartella dell'applicazione Gruppo2614_Elaborato su Visual Studio Code.
+3. Aprire la cartella dell'applicazione su Visual Studio Code.
 4. Aprire un nuovo terminale ed eseguire con ./gradlew run.
 5. Per effettuare il login è possibile usare queste credenziali: 
 - codice dipendente 'D001' e relativa password '11111'
