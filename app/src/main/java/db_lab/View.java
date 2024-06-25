@@ -174,7 +174,7 @@ public final class View {
             cp.setLayout(new GridLayout(0, 1, 10, 10)); // GridLayout con una sola colonna e spaziatura di 10 pixel
 
             cp.add(new JLabel("Benvenuto "+dipendente, SwingConstants.CENTER));
-            cp.add(button("Crea Ordini", () -> this.getController().createOrdine(dipendente)));
+            cp.add(button("Crea Ordini", () -> this.getController().startOrdine(dipendente)));
             cp.add(button("Visualizza i miei turni", () -> this.getController().showTurni(dipendente)));
             cp.add(button("Crea nuova dose gusto", () -> this.getController().createDoseGusto(dipendente)));
             cp.add(button("Iscrivi cliente", () -> this.createClientePage(dipendente)));
@@ -244,7 +244,7 @@ public final class View {
 
                         if (prodottiComprati != 0){
                 
-                            var codOrdine = this.getController().createOrdineSenzaTessera(dipendente, "", 0);
+                            var codOrdine = this.getController().createOrdine(dipendente, "", 0);
                             
                             float importoTotale = 0;
                             for (String codProdotto : listaQuantita.keySet()) {
@@ -301,7 +301,7 @@ public final class View {
                 } else {
                     //creazione dell'ordine compreso di tessera
 
-                    var codOrdine = this.getController().createOrdineSenzaTessera(dipendente, clienteCF.getText(), nTessera);
+                    var codOrdine = this.getController().createOrdine(dipendente, clienteCF.getText(), nTessera);
 
                     float importoTotale = 0;
                     for (String codProdotto : listaQuantita.keySet()) {

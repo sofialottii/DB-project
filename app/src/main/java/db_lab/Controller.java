@@ -33,13 +33,13 @@ public final class Controller {
 
     
 
-    public void createOrdine(String dipendente){
+    public void startOrdine(String dipendente){
         var prodotti = this.model.listAllProdotti();
         this.view.scegliProdotto(dipendente, prodotti);
     }
 
-    public List<String> createOrdineSenzaTessera(String dipendente, String clienteCF, float nTessera) {
-        return this.model.nuovoOrdineSenzaTessera(dipendente, clienteCF, nTessera);
+    public List<String> createOrdine(String dipendente, String clienteCF, float nTessera) {
+        return this.model.nuovoOrdine(dipendente, clienteCF, nTessera);
     }
 
     public void createComposizione(String dipendente, String data, String orario, String codProdotto, Integer quantita){
