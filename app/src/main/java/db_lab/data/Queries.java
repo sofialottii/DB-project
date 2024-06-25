@@ -52,7 +52,7 @@ public final class Queries {
                 SELECT SUM(quantita) AS totaleQuantita
                 FROM DOSI_GUSTO
                 GROUP BY nomeGusto
-            ) AS Sottoquery
+            ) AS SumTotQuantitaPerGusto
         );
         """;
 
@@ -67,22 +67,25 @@ public final class Queries {
                 SELECT SUM(quantita) AS totaleQuantita
                 FROM composizioni
                 GROUP BY codProdotto
-            ) AS Sottoquery
+            ) AS totQuantitaPerProdotto
         );
         """;
 
         public static final String MESE_POPOLARE = """
         SELECT DATE_FORMAT(data, '%M') AS mese, COUNT(*) AS numeroOrdini
         FROM ORDINI
+        WHERE YEAR(data) = YEAR(CURDATE())
         GROUP BY mese
-        HAVING COUNT(*) = (
-            SELECT MAX(numeroOrdini)
-            FROM (
-                SELECT COUNT(*) AS numeroOrdini
-                FROM ORDINI
-                GROUP BY DATE_FORMAT(data, '%M')
-            ) AS Sottoquery
-        );
+            HAVING COUNT(*) = (
+                SELECT MAX(numeroOrdini)
+                FROM (
+                    SELECT COUNT(*) AS numeroOrdini
+                    FROM ORDINI
+                    WHERE YEAR(data) = YEAR(CURDATE())
+                    GROUP BY DATE_FORMAT(data, '%M')
+            ) AS totOrdiniPerMese
+);
+
         """;
 
         public static final String RICAVO_MENSILE = """
